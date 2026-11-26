@@ -70,7 +70,7 @@
   });}};
 })();
 </script>
-<script>var R=document.documentElement;R.setAttribute("data-theme","ilham");try{var t=localStorage.getItem("athar-theme");if(t)R.setAttribute("data-theme",t);var md=localStorage.getItem("athar-mode");if(md)R.setAttribute("data-mode",md);var z=localStorage.getItem("athar-zoom");if(z)R.style.setProperty("--zoom",z);}catch(e){}</script>
+<script>var R=document.documentElement;R.setAttribute("data-theme","ilham");try{var md=localStorage.getItem("athar-mode");if(md)R.setAttribute("data-mode",md);var z=localStorage.getItem("athar-zoom");if(z)R.style.setProperty("--zoom",z);}catch(e){}</script>
 <style>
 /* Layout idea: a calm white staffroom — teal masthead, grade shelves 1–12, practices as observation cards, lesson rooms as threads. Single light theme by the supervisor's request. */
 :root{
@@ -903,31 +903,26 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:0}
         <img class="logo" src="img/logo-180.png" alt="شعار معًا نُلهم لنصنع أثرًا" width="62" height="62">
         <div><h1>منصة أثر</h1><p>معًا نُلهم لنصنع أثرًا · مجتمع ممارسة لتبادل الخبرات في تقنية المعلومات</p></div>
       </div>
-      <div class="me"><span class="owner-tag">مالكات المنصة: أ. منيرة الحراصي (مشرفة تقنية المعلومات) · أ. عبير اليحمدي (معلمة تقنية المعلومات) · أ. نجلاء الزدجالي (معلمة تقنية المعلومات)</span><span class="disp" role="group" aria-label="خيارات العرض"><button type="button" id="modeBtn" aria-label="الوضع الليلي" title="الوضع الليلي/النهاري">🌙</button><button type="button" data-fs="-" aria-label="تصغير الخط" title="تصغير الخط">A−</button><button type="button" data-fs="+" aria-label="تكبير الخط" title="تكبير الخط">A+</button></span><span class="theme-sw" role="group" aria-label="مظهر المنصة">المظهر:<button type="button" data-theme-btn="ilham" title="الملهمة" aria-label="مظهر الملهمة" style="background:#163f52;--sw2:#d9a64e"></button><button type="button" data-theme-btn="athar" title="أثر" aria-label="مظهر أثر" style="background:#0b4f4c;--sw2:#d9a441"></button><button type="button" data-theme-btn="warm" title="عُماني دافئ" aria-label="مظهر عُماني دافئ" style="background:#1f2a44;--sw2:#c8643b"></button><button type="button" data-theme-btn="vivid" title="تعليمي حيوي" aria-label="مظهر تعليمي حيوي" style="background:#4b3a9e;--sw2:#ff8a65"></button></span><span id="meBox" style="display:contents"></span><button class="btn cta" type="button" data-act="new-practice">+ شارك/ي تجربتك</button><button class="burger" type="button" aria-label="القائمة" aria-expanded="false" aria-controls="mainNav">☰</button></div>
+      <div class="me"><span class="owner-tag">مالكات المنصة: أ. منيرة الحراصي (مشرفة تقنية المعلومات) · أ. عبير اليحمدي (معلمة تقنية المعلومات) · أ. نجلاء الزدجالي (معلمة تقنية المعلومات)</span><span class="disp" role="group" aria-label="خيارات العرض"><button type="button" id="modeBtn" aria-label="الوضع الليلي" title="الوضع الليلي/النهاري">🌙</button><button type="button" data-fs="-" aria-label="تصغير الخط" title="تصغير الخط">A−</button><button type="button" data-fs="+" aria-label="تكبير الخط" title="تكبير الخط">A+</button></span><span id="meBox" style="display:contents"></span><button class="btn cta" type="button" data-act="new-practice">+ شارك/ي تجربتك</button><button class="burger" type="button" aria-label="القائمة" aria-expanded="false" aria-controls="mainNav">☰</button></div>
     </div>
     <nav class="tabs" id="mainNav" aria-label="أقسام المنصة">
       <a href="#home" data-v="home">🏠 الرئيسية</a>
       <div class="dd" data-group="learn">
-        <button type="button" class="dd-btn" aria-expanded="false">📚 التعليم والتعلّم <span class="car">▾</span></button>
+        <button type="button" class="dd-btn" aria-expanded="false">📚 الصفوف والدروس <span class="car">▾</span></button>
         <div class="dd-menu">
           <a href="#grade-1" data-v="grade"><b>الصفوف 1–12</b><small>الخطة والدروس وتجارب كل صف</small></a>
-          <a href="#practices" data-v="practices"><b>الممارسات التدريسية</b><small>تجارب الزملاء ونماذج المشرفة</small></a>
           <a href="#ld" data-v="ld"><b>صعوبات التعلم</b><small>الرصد والاستراتيجيات وخطط الدعم</small></a>
+          <a href="#tools" data-v="tools"><b>أدوات وورش</b><small>مؤقتات، ورش، أدلة، كتب تفاعلية</small></a>
+          <a href="#resources" data-v="resources"><b>مرجعيات</b><small>النشرة التوجيهية ووثيقة التقويم</small></a>
         </div>
       </div>
       <div class="dd" data-group="community">
         <button type="button" class="dd-btn" aria-expanded="false">💬 المجتمع <span class="car">▾</span></button>
         <div class="dd-menu">
+          <a href="#practices" data-v="practices"><b>تجارب الميدان</b><small>ممارسات الزملاء ونماذج المشرفة</small></a>
           <a href="#discuss" data-v="discuss"><b>غرفة النقاش</b><small>آلية سير الدروس وتبادل الخبرة</small></a>
-          <a href="#ideas" data-v="needs"><b>مقترحات تطوير المنصة</b><small>اقترح/ي فكرة وأيّد/ي أفكار الزملاء</small></a>
           <a href="#needs" data-v="needs"><b>الاحتياجات التدريبية</b><small>سجّل/ي ما تحتاجه من تدريب</small></a>
-        </div>
-      </div>
-      <div class="dd" data-group="res">
-        <button type="button" class="dd-btn" aria-expanded="false">🧰 الموارد <span class="car">▾</span></button>
-        <div class="dd-menu">
-          <a href="#tools" data-v="tools"><b>أدوات وورش</b><small>مؤقتات، ورش، أدلة، كتب تفاعلية</small></a>
-          <a href="#resources" data-v="resources"><b>مرجعيات</b><small>النشرة التوجيهية ووثيقة التقويم</small></a>
+          <a href="#ideas" data-v="needs"><b>مقترحات تطوير المنصة</b><small>اقترح/ي فكرة وأيّد/ي أفكار الزملاء</small></a>
         </div>
       </div>
       <a href="#supervisor" data-v="supervisor" class="star">⭐ ركن الإشراف</a>
@@ -2593,7 +2588,7 @@ buildStatic();route();renderAll();
     document.querySelectorAll("[data-theme-btn]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.themeBtn===t?"true":"false");});
     try{localStorage.setItem(KEY,t);}catch(e){}
   }
-  var cur="ilham";try{cur=localStorage.getItem(KEY)||"ilham";}catch(e){}
+  var cur="ilham";
   apply(cur);
   document.querySelectorAll("[data-theme-btn]").forEach(function(b){b.addEventListener("click",function(){apply(b.dataset.themeBtn);});});
 })();
