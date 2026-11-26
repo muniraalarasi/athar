@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مغامرة بوربوينت | أبطال العروض التقديمية</title>
+<style>
+:root{--navy:#172554;--blue:#2563eb;--cyan:#38bdf8;--pink:#ec4899;--gold:#fbbf24}
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#111c4e,#243b86 55%,#6d28d9);color:#172554;min-height:100vh;padding:18px}
+.shell{max-width:900px;margin:auto;background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 18px 55px #050b2b88}
+header{padding:25px;text-align:center;color:white;background:radial-gradient(circle at 15% 20%,#f472b6,transparent 24%),linear-gradient(120deg,#172554,#2563eb,#7c3aed)}
+.logo{font-size:42px}h1{margin:8px 0;font-size:clamp(24px,5vw,38px)}header p{margin:5px;color:#e0e7ff}
+.progress{height:9px;background:#dbeafe}.bar{height:100%;width:0;background:linear-gradient(90deg,#38bdf8,#f0abfc);transition:.3s}
+main{padding:clamp(18px,4vw,34px)}.screen{display:none}.screen.active{display:block}
+h2{color:#1e3a8a;margin-top:0}.intro{text-align:center}.intro .big{font-size:70px}
+input{width:100%;padding:14px;border:2px solid #bfdbfe;border-radius:12px;font-size:18px;margin:8px 0 16px}
+button{border:0;border-radius:13px;padding:13px 22px;font-size:17px;font-weight:bold;cursor:pointer;background:#2563eb;color:white;box-shadow:0 5px 0 #1e40af}
+button:disabled{opacity:.45;cursor:not-allowed}button.alt{background:#e0e7ff;color:#1e3a8a;box-shadow:0 5px 0 #c7d2fe}.actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.card{background:#eff6ff;border:2px solid #bfdbfe;border-radius:18px;padding:18px;margin:12px 0}
+.question{font-size:21px;font-weight:bold;line-height:1.7}.answers{display:grid;gap:10px;margin-top:16px}
+.answer{background:white;color:#1e3a8a;border:2px solid #bfdbfe;box-shadow:none;text-align:right}.answer.selected{background:#dbeafe;border-color:#2563eb}
+.feedback{min-height:30px;font-weight:bold;margin-top:12px}.pill{display:inline-block;background:#fef3c7;color:#92400e;padding:7px 13px;border-radius:99px;font-weight:bold}
+.result{text-align:center}.score{font-size:54px;color:#2563eb;font-weight:bold}.cert-wrap{margin:18px auto;max-width:760px}
+canvas{width:100%;height:auto;border-radius:8px;border:1px solid #cbd5e1;background:white}
+.small{font-size:13px;color:#64748b;line-height:1.7}.tools{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+footer{text-align:center;padding:16px;color:#64748b;background:#f8fafc;font-size:13px}
+@media(max-width:520px){body{padding:8px}.actions button,.tools button{width:100%}}
+</style></head>
+<body><div class="shell">
+<header><div class="logo">🖥️ ✨</div><h1>مغامرة بوربوينت</h1><p>أبطال العروض التقديمية | تحدّي الصف الرابع</p></header>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<main>
+<section id="welcome" class="screen active intro">
+<div class="big">📊🎨</div><h2>هل أنت مستعد لتصبح بطل بوربوينت؟</h2>
+<p>أجب عن الأسئلة، واجمع النقاط، ثم احصل على شهادة إنجاز باسمك!</p>
+<div class="card" style="text-align:right"><label for="student">اسم الطالب/ـة كما تريد ظهوره في الشهادة:</label><input id="student" maxlength="45" placeholder="اكتب اسمك هنا"></div>
+<div class="actions"><button onclick="startGame()">ابدأ المغامرة 🚀</button></div>
+</section>
+<section id="quiz" class="screen">
+<div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><span class="pill" id="qcount">السؤال 1 من 8</span><span class="pill">⭐ النقاط: <b id="points">0</b></span></div>
+<div class="card"><div class="question" id="question"></div><div class="answers" id="answers"></div><div class="feedback" id="feedback"></div></div>
+<div class="actions"><button id="next" onclick="nextQuestion()" disabled>السؤال التالي ←</button></div>
+</section>
+<section id="finish" class="screen result">
+<div style="font-size:65px">🏆🎉</div><h2 id="resultTitle">أحسنت يا بطل!</h2><p>نتيجتك النهائية</p><div class="score" id="finalScore">0 / 8</div><p id="resultText"></p>
+<div class="cert-wrap"><canvas id="certificate" width="1400" height="990"></canvas></div>
+<div class="tools"><button onclick="downloadPNG()">⬇ حفظ الشهادة PNG</button><button onclick="downloadPDF()">📄 حفظ الشهادة PDF</button><button class="alt" onclick="restart()">إعادة اللعبة</button></div>
+<p class="small">يمكنك حفظ الشهادة كصورة PNG أو كملف PDF بعد إكمال اللعبة.</p>
+</section>
+</main><footer>لعبة تعليمية تفاعلية عن برنامج Microsoft PowerPoint • إعداد: الأستاذة فوزية جمعه الهادي</footer></div>
+<script>
+const questions=[
+{q:"ما البرنامج الذي نستخدمه لإنشاء العروض التقديمية؟",a:["Microsoft Word","Microsoft PowerPoint","الآلة الحاسبة"],c:1,why:"بوربوينت مخصص لإنشاء العروض التقديمية."},
+{q:"ماذا نسمّي الصفحة الواحدة في العرض التقديمي؟",a:["شريحة","خلية","مجلد"],c:0,why:"تسمّى الصفحة في بوربوينت شريحة."},
+{q:"أي تبويب نستخدم غالبًا لإضافة صورة إلى الشريحة؟",a:["إدراج","ملف","عرض"],c:0,why:"من تبويب إدراج نستطيع إضافة الصور والأشكال."},
+{q:"ما الأمر المستخدم لإضافة شريحة جديدة؟",a:["نسخ","شريحة جديدة","حذف"],c:1,why:"نختار شريحة جديدة لإضافة صفحة إلى العرض."},
+{q:"أي مما يأتي يجعل العرض أكثر وضوحًا؟",a:["كتابة نص طويل جدًا","استخدام ألوان متناسقة وخط واضح","وضع صور كثيرة بلا ترتيب"],c:1,why:"التنسيق الواضح والألوان المتناسقة يساعدان الجمهور."},
+{q:"ما فائدة زر عرض الشرائح؟",a:["مشاهدة العرض على الشاشة","إغلاق الحاسوب","حذف الصور"],c:0,why:"يعرض الشرائح بصورة متتابعة أمام المشاهدين."},
+{q:"أي خيار نستخدم لحفظ العمل؟",a:["ملف ثم حفظ","إدراج ثم صورة","تصميم ثم ألوان"],c:0,why:"نحفظ العرض من قائمة ملف ثم حفظ."},
+{q:"ما أفضل قاعدة عند تصميم شريحة؟",a:["ترتيب الأفكار واختصار النص","استخدام خطوط كثيرة","ملء الشريحة بالنصوص"],c:0,why:"الشريحة الجيدة بسيطة ومنظمة وسهلة القراءة."}
+];
+let index=0,score=0,chosen=null,studentName="",scormAPI=null;
+function findSCORM(win){let tries=0;while(win&&tries<500){if(win.API)return win.API;if(win.parent===win)break;win=win.parent;tries++}return null}
+function scormCall(name,value){try{if(scormAPI&&scormAPI[name])return scormAPI[name](value||"")}catch(e){}return ""}
+function initSCORM(){scormAPI=findSCORM(window);if(scormAPI){scormCall("LMSInitialize","");scormCall("LMSSetValue","cmi.core.lesson_status");try{scormAPI.LMSSetValue("cmi.core.lesson_status","incomplete")}catch(e){}}}
+function closeSCORM(){if(scormAPI){scormCall("LMSCommit","");scormCall("LMSFinish","")}}
+window.addEventListener("beforeunload",closeSCORM);
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function startGame(){initSCORM();studentName=document.getElementById('student').value.trim();if(!studentName){alert("يرجى كتابة اسم الطالب أولًا.");return}index=0;score=0;document.getElementById('points').textContent=score;show('quiz');renderQuestion()}
+function renderQuestion(){chosen=null;let q=questions[index];document.getElementById('qcount').textContent=`السؤال ${index+1} من ${questions.length}`;document.getElementById('question').textContent=q.q;document.getElementById('feedback').textContent="";document.getElementById('next').disabled=true;document.getElementById('next').textContent=index===questions.length-1?"عرض النتيجة 🏆":"السؤال التالي ←";let box=document.getElementById('answers');box.innerHTML="";q.a.forEach((a,i)=>{let b=document.createElement('button');b.className='answer';b.textContent=a;b.onclick=()=>choose(i,b);box.appendChild(b)});document.getElementById('bar').style.width=(index/questions.length*100)+"%"}
+function choose(i,b){if(chosen!==null)return;chosen=i;let q=questions[index];document.querySelectorAll('.answer').forEach(x=>x.disabled=true);if(i===q.c){score++;b.classList.add('selected');document.getElementById('feedback').textContent="⭐ إجابة صحيحة! "+q.why;document.getElementById('feedback').style.color="#15803d"}else{document.getElementById('feedback').textContent="حاول في السؤال القادم. الإجابة الصحيحة: "+q.a[q.c]+". "+q.why;document.getElementById('feedback').style.color="#b45309"}document.getElementById('points').textContent=score;document.getElementById('next').disabled=false}
+function nextQuestion(){if(chosen===null)return;index++;if(index<questions.length)renderQuestion();else finishGame()}
+function finishGame(){if(scormAPI){try{scormAPI.LMSSetValue("cmi.core.score.raw",String(Math.round(score/questions.length*100)));scormAPI.LMSSetValue("cmi.core.score.min","0");scormAPI.LMSSetValue("cmi.core.score.max","100");scormAPI.LMSSetValue("cmi.core.lesson_status",score>=6?"passed":"completed");scormAPI.LMSCommit("")}catch(e){}}show('finish');document.getElementById('bar').style.width="100%";document.getElementById('finalScore').textContent=score+" / "+questions.length;document.getElementById('resultTitle').textContent=score>=6?"مبدع! تستحق لقب بطل بوربوينت":"أحسنت المحاولة! واصل التعلم";document.getElementById('resultText').textContent=score>=6?"أظهرت معرفة رائعة ببرنامج بوربوينت.":"التدريب والمحاولة طريق الإتقان. يمكنك إعادة اللعبة وتحسين نتيجتك.";drawCertificate()}
+function drawCertificate(){let c=document.getElementById('certificate'),x=c.getContext('2d'),w=c.width,h=c.height;x.fillStyle="#fff";x.fillRect(0,0,w,h);x.fillStyle="#172554";x.fillRect(0,0,w,24);x.fillStyle="#2563eb";x.fillRect(0,h-24,w,24);x.strokeStyle="#d4a72c";x.lineWidth=18;x.strokeRect(38,38,w-76,h-76);x.strokeStyle="#93c5fd";x.lineWidth=4;x.strokeRect(62,62,w-124,h-124);
+x.textAlign="center";x.direction="rtl";x.fillStyle="#1e3a8a";x.font="bold 88px Tahoma";x.fillText("شهادة إنجاز",w/2,220);x.fillStyle="#d4a72c";x.font="bold 42px Tahoma";x.fillText("🏆 بطل بوربوينت 🏆",w/2,310);x.fillStyle="#334155";x.font="42px Tahoma";x.fillText("تُمنح هذه الشهادة إلى الطالب/ـة",w/2,430);x.fillStyle="#7c3aed";x.font="bold 66px Tahoma";x.fillText(studentName,w/2,545);x.fillStyle="#334155";x.font="38px Tahoma";x.fillText("لإتمامه مغامرة برنامج بوربوينت بنجاح",w/2,650);x.fillStyle="#2563eb";x.font="bold 42px Tahoma";x.fillText("النتيجة: "+score+" من "+questions.length,w/2,735);x.fillStyle="#475569";x.font="32px Tahoma";x.fillText("الأستاذة فوزية جمعه الهادي",w/2,850);x.fillStyle="#d4a72c";x.font="34px Tahoma";x.fillText("✨ استمر في الإبداع والتميز ✨",w/2,915)}
+function downloadPNG(){let a=document.createElement('a');a.download='شهادة-بطل-بوربوينت.png';a.href=document.getElementById('certificate').toDataURL('image/png');a.click()}
+function downloadPDF(){let c=document.getElementById('certificate'),jpg=c.toDataURL('image/jpeg',.95).split(',')[1],bin=atob(jpg),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);let enc=new TextEncoder(),parts=[],offset=0,objects=[];function add(s){let b=typeof s==='string'?enc.encode(s):s;parts.push(b);offset+=b.length}function obj(n,content){objects[n]=content}
+obj(1,"<< /Type /Catalog /Pages 2 0 R >>");obj(2,"<< /Type /Pages /Kids [3 0 R] /Count 1 >>");obj(3,"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 841.89 595.28] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>");obj(4,null);obj(5,null);
+add("%PDF-1.4\n");let offsets=[0];for(let n=1;n<=5;n++){offsets[n]=offset; if(n===4){add("4 0 obj\n<< /Type /XObject /Subtype /Image /Width 1400 /Height 990 /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length "+bytes.length+" >>\nstream\n");add(bytes);add("\nendstream\nendobj\n")}else if(n===5){let stream="q 841.89 0 0 595.28 0 0 cm /Im0 Do Q";add("5 0 obj\n<< /Length "+stream.length+" >>\nstream\n"+stream+"\nendstream\nendobj\n")}else add(n+" 0 obj\n"+objects[n]+"\nendobj\n")}
+let xref=offset;add("xref\n0 6\n0000000000 65535 f \n");for(let n=1;n<=5;n++)add(String(offsets[n]).padStart(10,'0')+" 00000 n \n");add("trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n"+xref+"\n%%EOF");let blob=new Blob(parts,{type:'application/pdf'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='شهادة-بطل-بوربوينت.pdf';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function restart(){document.getElementById('student').value="";document.getElementById('bar').style.width="0";show('welcome')}
+</script></body></html>
