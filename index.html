@@ -800,6 +800,10 @@ body.gated{overflow:hidden}
 .semsw{margin:0}
 .semsw button{font-size:14.5px}
 
+.sup-jump{margin:14px 0 4px;gap:8px}.sup-jump .chip{padding:7px 16px;font-size:14px}.sup-jump .chip:hover{border-color:var(--teal);color:var(--teal)}
+#flashes,#flashesLd{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}#flashes .flash div,#flashesLd .flash div{font-size:14px}
+@media (max-width:1000px){#flashes,#flashesLd{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){#flashes,#flashesLd{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* روابط مهمة */
 .qlinks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
 .qlink{display:flex;gap:10px;align-items:center;padding:9px 12px;text-decoration:none;color:var(--ink);border-radius:14px}
@@ -1082,9 +1086,16 @@ body.gated{overflow:hidden}
       </div>
       <a class="btn" href="https://youtube.com/@mm_53" target="_blank" rel="noopener noreferrer">قناة معين على يوتيوب</a>
     </div>
-    <div class="sec"><div class="sec-h"><div><h2>مبادرات مشرفات تقنية المعلومات</h2><p>مبادرات وقنوات وورش تدريبية تخدم المعلم والمعلمة في الموقف الصفي</p></div><button class="btn pri owner-only" type="button" id="addInit">+ إضافة مبادرة</button></div><div class="inits" id="inits"></div></div>
-    <div class="sec"><div class="sec-h"><div><h2>نماذج تطبيقية من تجارب المشرفة</h2><p>افتح/ي أي نموذج لعرض خطوات التنفيذ</p></div><button class="btn owner-only" type="button" id="addModel">+ نموذج جديد</button></div><div class="grid" id="models"></div></div>
-    <div class="sec"><div class="sec-h"><h2>ومضات إشرافية</h2><p>اضغط/ي على الومضة لتكبيرها</p></div><div class="flashes" id="flashes"></div></div>
+    <div class="chips sup-jump" role="navigation" aria-label="أقسام ركن الإشراف">
+      <button class="chip" type="button" data-scroll="supModels">🎬 نماذج تطبيقية</button>
+      <button class="chip" type="button" data-scroll="supFlashes">🖼️ ومضات إشرافية</button>
+      <button class="chip" type="button" data-scroll="supLd">🤝 ومضات صعوبات التعلم</button>
+      <button class="chip" type="button" data-scroll="supInits">🚀 مبادرات المشرفات</button>
+    </div>
+    <div class="sec" id="supModels"><div class="sec-h"><div><h2>نماذج تطبيقية من تجارب المشرفة</h2><p>فيديو وخطوات تنفيذ لكل نموذج، مرتبطة بدروس الخطة · افتح/ي أي نموذج</p></div><button class="btn owner-only" type="button" id="addModel">+ نموذج جديد</button></div><div class="grid" id="models"></div></div>
+    <div class="sec" id="supFlashes"><div class="sec-h"><div><h2>ومضات إشرافية</h2><p>ممارسات تدريسية داخل مختبر الحاسوب · اضغط/ي على الومضة لتكبيرها أو تنزيلها</p></div></div><div class="flashes" id="flashes"></div></div>
+    <div class="sec" id="supLd"><div class="sec-h"><div><h2>ومضات دعم طلبة صعوبات التعلم</h2><p>سلسلة من ست ومضات للموقف الصفي · <a href="#ld">الدخول إلى قسم صعوبات التعلم</a></p></div></div><div class="flashes" id="flashesLd"></div></div>
+    <div class="sec" id="supInits"><div class="sec-h"><div><h2>مبادرات مشرفات تقنية المعلومات</h2><p>مبادرات وقنوات وورش تدريبية تخدم المعلم والمعلمة في الموقف الصفي</p></div><button class="btn pri owner-only" type="button" id="addInit">+ إضافة مبادرة</button></div><div class="inits" id="inits"></div></div>
   </section>
 
   <!-- DISCUSS -->
@@ -1648,7 +1659,7 @@ function renderSupervisor(){
   const ms=allPractices().filter(p=>p.src==="model");
   if(!ms.length)M.append(emptyBox(loaded.models?"لا توجد نماذج بعد":"جارٍ التحميل…",""));
   ms.forEach(p=>M.append(pcard(p)));
-  const F=$("#flashes");F.replaceChildren();[...FLASHES,...LD_POSTERS].forEach(f=>F.append(flashCard(f)));
+  const F=$("#flashes");F.replaceChildren();FLASHES.forEach(f=>F.append(flashCard(f)));const FL=$("#flashesLd");if(FL){FL.replaceChildren();LD_POSTERS.forEach(f=>FL.append(flashCard(f)));}
 }
 function renderInits(){const I=$("#inits");I.replaceChildren();if(!initiatives.length)I.append(emptyBox(loaded.initiatives?"لا توجد مبادرات بعد":"جارٍ التحميل…",""));initiatives.forEach(i=>I.append(initCard(i)));}
 
