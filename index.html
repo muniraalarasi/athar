@@ -804,6 +804,66 @@ body.gated{overflow:hidden}
 #flashes,#flashesLd{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}#flashes .flash div,#flashesLd .flash div{font-size:14px}
 @media (max-width:1000px){#flashes,#flashesLd{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:560px){#flashes,#flashesLd{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* ركن الإشراف في الرئيسية */
+.sup-cols{grid-template-columns:1fr!important;gap:22px}
+.sup-cols .flashes{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:12px}
+.sup-cols .flash div{font-size:14px;padding:8px 10px}
+.sup-cols .inits{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))!important;gap:12px}
+#homeInits .init .cover{height:74px}
+#homeInits .init .cover svg{width:56px;height:40px}
+#homeInits .init .bd{padding:10px 14px;gap:3px}
+#homeInits .init h3{font-size:17px}
+#homeInits .init .bd p{font-size:13.5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#homeInits .init .ft{padding:8px 14px}
+@media (max-width:1000px){.sup-cols .flashes{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media (max-width:560px){.sup-cols .flashes{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+/* أغلفة المبادرات */
+.init .icover{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:12px 14px;text-align:center;color:#fff;overflow:hidden;background:linear-gradient(135deg,var(--teal),var(--teal-2))}
+.init .icover::before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;border:28px solid rgba(255,255,255,.08);left:-60px;top:-70px}
+.init .icover::after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.07);right:-40px;bottom:-60px}
+.init .icover.k-work{background:linear-gradient(135deg,#7a4a0e,#c58a2b)}
+.init .icover.k-chan{background:linear-gradient(135deg,#0b4f4c,#1d8a84)}
+.init .icover.k-init{background:linear-gradient(135deg,#3b2f7a,#6a55c2)}
+.init .icover>*{position:relative;z-index:1}
+.init .icover .ic-ico{font-size:26px;line-height:1}
+.init .icover .ic-t{font-family:var(--display);font-size:22px;line-height:1.25;color:#fff}
+.init .icover .ic-k{font-size:12px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:1px 10px}
+#homeInits .init .icover{flex-direction:row;gap:10px}
+#homeInits .init .icover .ic-ico{font-size:22px}
+#homeInits .init .icover .ic-t{font-size:19px}
+#homeInits .init .icover .ic-k{display:none}
+/* أغلفة موحّدة لبقية الأقسام */
+.pcover{--pc:#0e7c78;position:relative;height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:12px 16px;text-align:center;color:#fff;overflow:hidden;background:linear-gradient(135deg,var(--pc),color-mix(in srgb,var(--pc) 65%,#0b1b24))}
+.pcover::before{content:"";position:absolute;width:190px;height:190px;border-radius:50%;border:30px solid rgba(255,255,255,.08);left:-70px;top:-80px}
+.pcover::after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.07);right:-40px;bottom:-60px}
+.pcover>*{position:relative;z-index:1}
+.pcover .pc-ico{font-size:28px;line-height:1}
+.pcover .pc-t{font-family:var(--display);font-size:18px;line-height:1.3;color:#fff;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pcover .pc-k{font-size:11.5px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:1px 10px}
+.show .cover.scover{position:relative;overflow:hidden;color:#fff;background:linear-gradient(135deg,#0b4f4c,#1d8a84)}
+.show .cover.scover::before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;border:28px solid rgba(255,255,255,.08);left:-60px;top:-70px}
+.show .cover.scover>*{position:relative;z-index:1}
+.show .cover.scover b{color:#fff}
+.show .cover.scover span{color:rgba(255,255,255,.85)}
+.show .cover.scover .sc-ico{font-style:normal;font-size:26px;line-height:1}
+.show .cover.s-work{background:linear-gradient(135deg,#7a4a0e,#c58a2b)}
+.show .cover.s-game{background:linear-gradient(135deg,#8a2d6e,#c85a9e)}
+.show .cover.s-book{background:linear-gradient(135deg,#1d4f91,#3d7fd0)}
+.show .cover.s-show{background:linear-gradient(135deg,#3b2f7a,#6a55c2)}
+.room{border-top:4px solid var(--teal-2)}
+.room h3::before{content:"💬 ";font-size:15px}
+/* أيقونات بطابع ثلاثي الأبعاد */
+.pcover .pc-ico,.init .icover .ic-ico,.show .cover.scover .sc-ico{display:grid;place-items:center;width:60px;height:60px;flex:none;border-radius:19px;font-size:33px;line-height:1;font-style:normal;
+background:radial-gradient(120% 120% at 30% 20%,#ffffff 0%,#f3f6f8 45%,#d9e2e8 100%);
+box-shadow:0 12px 20px rgba(0,0,0,.28),0 3px 6px rgba(0,0,0,.18),inset 0 -6px 0 rgba(15,40,55,.14),inset 0 3px 0 rgba(255,255,255,.95),inset 3px 0 6px rgba(255,255,255,.6);
+text-shadow:0 4px 5px rgba(0,0,0,.28);
+transform:perspective(240px) rotateX(12deg) rotateY(-12deg) rotateZ(-4deg);
+transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.pcover .pc-ico::after,.init .icover .ic-ico::after,.show .cover.scover .sc-ico::after{content:"";position:absolute}
+.card:hover .pcover .pc-ico,.card:hover .icover .ic-ico,.card:hover .scover .sc-ico{transform:perspective(240px) rotateX(0) rotateY(0) rotateZ(0) translateY(-5px) scale(1.08)}
+.pcover{height:auto;min-height:176px;padding:16px 16px 14px}
+#homeInits .init .icover .ic-ico{width:42px;height:42px;border-radius:13px;font-size:23px}
+@media (prefers-reduced-motion:reduce){.pcover .pc-ico,.init .icover .ic-ico,.show .cover.scover .sc-ico{transition:none}}
 /* روابط مهمة */
 .qlinks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
 .qlink{display:flex;gap:10px;align-items:center;padding:9px 12px;text-decoration:none;color:var(--ink);border-radius:14px}
@@ -1533,7 +1593,7 @@ function pcard(p){
   const who=p.src==="model"?(s(p.by)||"المشرفة منيرة الحراصي"):(profName(p.uid)+(profSchool(p.uid)?" · "+profSchool(p.uid):""));
   return el("button",{class:"card pcard",type:"button",onclick:()=>openDetail(p.pid)},
     el("div",{class:"strip",style:"background:"+t.c}),
-    firstImg?el("img",{class:"thumb",src:firstImg,alt:"",loading:"lazy"}):null,
+    firstImg?el("img",{class:"thumb",src:firstImg,alt:"",loading:"lazy"}):el("div",{class:"pcover",style:"--pc:"+t.c},el("span",{class:"pc-ico","aria-hidden":"true",text:({intro:"🚀",practical:"🖥️",coop:"🤝",diff:"🧩",ld:"💜",fair:"🎯",formative:"📝",assess:"✅",ai:"🤖",games:"🎮",ct:"🧠",project:"🛠️",citizen:"🛡️",reinforce:"⭐",flipped:"🎬",lab:"🧪",other:"✨"})[p.type]||"✨"}),el("b",{class:"pc-t",text:s(p.title)||"تجربة"}),el("span",{class:"pc-k",text:t.t})),
     el("div",{class:"bd"},
       el("div",{class:"tagrow"},el("span",{class:"tag",style:"background:"+t.c+"1a;color:"+t.c,text:t.t}),el("span",{class:"tag v",text:gname(n(p.grade))}),p.src==="model"?el("span",{class:"tag w",text:"نموذج المشرفة"}):null,p.video?el("span",{class:"tag g",text:"🎬 فيديو"}):null),
       el("h3",{text:s(p.title)||"تجربة"}),
@@ -1566,7 +1626,7 @@ function renderHome(){
   const hi=$("#homeInits");hi.replaceChildren();initiatives.slice(0,3).forEach(i=>hi.append(initCard(i)));
   if(!initiatives.length)hi.append(emptyBox(loaded.initiatives?"لا توجد مبادرات بعد":"جارٍ التحميل…",""));
   renderPoll();renderBoard();renderFeed();
-  const hf=$("#homeFlashes");hf.replaceChildren();FLASHES.slice(0,4).forEach(f=>hf.append(flashCard(f)));
+  const hf=$("#homeFlashes");hf.replaceChildren();FLASHES.forEach(f=>hf.append(flashCard(f)));
 }
 
 function flashCard(f){return el("button",{class:"card flash",type:"button",onclick:()=>{$("#imgTitle").textContent=f.t;$("#imgBig").src=f.img;$("#imgBig").alt=f.t;const A=$("#imgActs");A.replaceChildren(el("a",{class:"btn s",href:f.hd||f.img,target:"_blank",rel:"noopener"},"فتح بالحجم الكامل"),downloads?el("button",{class:"btn s pri",type:"button",onclick:ev=>dlFile(f.hd||f.img,"ومضة-"+f.t.replace(/\s+/g,"-")+".jpg",ev.currentTarget)},"⬇ تنزيل للطباعة"):null);$("#dImg").showModal();}},el("img",{src:f.img,alt:f.t,loading:"lazy"}),el("div",{text:f.t}));}
@@ -1574,7 +1634,12 @@ function flashCard(f){return el("button",{class:"card flash",type:"button",oncli
 function initCard(i){
   const link=safeUrl(i.link);const isYT=link&&/youtu/.test(link);
   const kindT={workshops:"ورش تدريبية",channel:"قناة تعليمية",initiative:"مبادرة إشرافية",other:"مبادرة"}[i.kind]||"مبادرة";
-  const cover=i.img?el("div",{class:"cover"},el("img",{src:s(i.img),alt:"",loading:"lazy"})):el("div",{class:"cover"+(isYT?" yt":"")},isYT?ytIcon():el("span",{style:"font-family:var(--display);font-size:22px;color:var(--teal)",text:s(i.title)}));
+  const kIco={workshops:"🎓",channel:"📺",initiative:"🚀",other:"✨"}[i.kind]||"✨";
+  const kCls={workshops:"k-work",channel:"k-chan",initiative:"k-init",other:"k-oth"}[i.kind]||"k-oth";
+  const cover=i.img?el("div",{class:"cover"},el("img",{src:s(i.img),alt:"",loading:"lazy"})):el("div",{class:"cover icover "+kCls},
+    el("span",{class:"ic-ico","aria-hidden":"true",text:kIco}),
+    el("b",{class:"ic-t",text:s(i.title)}),
+    el("span",{class:"ic-k",text:kindT+(isYT?" · يوتيوب":"")}));
   return el("div",{class:"card init"},cover,
     el("div",{class:"bd"},el("div",{class:"tagrow"},el("span",{class:"tag v",text:kindT})),el("h3",{text:s(i.title)}),el("div",{class:"by",text:s(i.by)}),el("p",{class:"sm",text:s(i.desc)})),
     el("div",{class:"ft"},link?el("a",{class:"btn s pri",href:link,target:"_blank",rel:"noopener noreferrer",text:isYT?"زيارة القناة على يوتيوب":"فتح الرابط"}):null,i.internal?el("a",{class:"btn s",href:s(i.internal),text:"استعراض"}):null,
@@ -1957,7 +2022,8 @@ function showCard(x){
   const gs=Array.isArray(x.grades)?x.grades.map(Number).filter(Boolean):[];
   const gl=gs.length?(gs.length===1?gname(gs[0]):"الصفوف "+gs.join("، ")):(x.kind==="tool"?"جميع الصفوف":"");
   const kt=x.kind==="workshop"?"ورشة ودليل":x.kind==="tool"?"أداة صفية":"إبداع من الميدان";
-  return el("div",{class:"card init show"},el("div",{class:"cover"},el("b",{text:s(x.title)}),host?el("span",{text:host}):null),
+  const sk=file?(game?"s-game":"s-book"):x.kind==="workshop"?"s-work":x.kind==="tool"?"s-tool":"s-show";const si={"s-game":"🎮","s-book":"📘","s-work":"🎓","s-tool":"🛠️","s-show":"✨"}[sk];
+  return el("div",{class:"card init show"},el("div",{class:"cover scover "+sk},el("i",{class:"sc-ico","aria-hidden":"true",text:si}),el("b",{text:s(x.title)}),host?el("span",{text:host}):null),
     el("div",{class:"bd"},el("div",{class:"tagrow"},el("span",{class:"tag g",text:kt}),gl?el("span",{class:"tag v",text:gl}):null),el("div",{class:"by",text:s(x.by)}),el("p",{class:"sm",style:"white-space:pre-wrap",text:s(x.desc)}),anonNote(x.by)),
     el("div",{class:"ft"},link?el("a",{class:"btn s pri",href:link,target:"_blank",rel:"noopener noreferrer",text:file?(game?"فتح اللعبة 🎮":"فتح الكتاب"):x.kind==="workshop"?"فتح الورشة":x.kind==="tool"?"فتح الأداة":"فتح المنصة"}):null,file&&downloads?el("button",{class:"btn s",type:"button",onclick:ev=>dlFile(file,s(x.dlname)||"book.html",ev.currentTarget)},"⬇ تنزيل"):null,isOwner?el("button",{class:"btn s",type:"button",onclick:()=>openShow(x)},"تعديل"):null,isOwner?delBtn(()=>delShow(x)):null));
 }
