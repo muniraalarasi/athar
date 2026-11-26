@@ -878,14 +878,6 @@ body.gated{overflow:hidden}
       <p class="owners">مالكات المنصة: <b>أ. منيرة الحراصي</b> (مشرفة تقنية المعلومات) · <b>أ. عبير اليحمدي</b> (معلمة تقنية المعلومات) · <b>أ. نجلاء الزدجالي</b> (معلمة تقنية المعلومات)</p>
     </div>
 
-    <div class="kpis kstrip">
-      <div class="card kpi"><span class="v num" id="k-teachers">0</span><span class="l">عضوًا مشاركًا</span></div>
-      <div class="card kpi"><span class="v num" id="k-practices">0</span><span class="l">تجربة وممارسة منشورة</span></div>
-      <div class="card kpi"><span class="v num" id="k-rooms">0</span><span class="l">نقاشًا حول الدروس</span></div>
-      <div class="card kpi"><span class="v num" id="k-schools">0</span><span class="l">مدرسة مشاركة</span></div>
-      <div class="card kpi"><span class="v num" id="k-visitors">0</span><span class="l">زائرًا للمنصة</span></div>
-    </div>
-
     <div class="sec" id="importantLinks">
       <div class="sec-h"><div><h2>روابط مهمة</h2><p>منصات وأنظمة نحتاجها يوميًا في عملنا</p></div></div>
       <div class="qlinks">
@@ -897,28 +889,10 @@ body.gated{overflow:hidden}
       </div>
     </div>
 
-    <div class="sec">
-      <div class="sec-h"><div><h2>تفاعل معنا</h2><p>صوّت/ي في سؤال الأسبوع، وتعرّف/ي على أكثر الزملاء والزميلات عطاءً، وتابع/ي ما يحدث الآن في المنصة</p></div></div>
-      <div class="inter">
-        <div class="card poll" id="pollBox"></div>
-        <div class="card lb" id="lbBox"></div>
-      </div>
-      <h3 class="mini-h" style="margin-top:18px">يحدث الآن في المنصة</h3>
-      <div class="feed" id="feed"></div>
-    </div>
-
     <div class="sec" id="homeGrades">
       <div class="sec-h"><div><h2>اختر/ي الصف</h2><p id="homeSemTxt">خطة الفصل الدراسي الأول 2026/2027 ودروسها وتجاربها</p></div><div id="homeSem"></div></div>
       <div class="grades" id="gradeTiles"></div>
       <div class="bandkey"><span><i style="background:#0e7c78"></i>الحلقة الأولى (1–4)</span><span><i style="background:#6a3f9e"></i>الحلقة الثانية (5–10)</span><span><i style="background:#c07a12"></i>ما بعد الأساسي (11–12)</span></div>
-    </div>
-
-    <div class="sec">
-      <div class="card ld-banner">
-        <div class="ld-ico" aria-hidden="true">🤝</div>
-        <div style="flex:1;min-width:240px"><span class="eyebrow">محور التركيز</span><h2>دعم طلبة صعوبات التعلم في مختبر الحاسوب</h2><p class="sm">تعرّف/ي على المؤشرات داخل الحصة، ثم شارك/ي خطة الدعم ومرحلتها وشواهدها.</p></div>
-        <div class="actions" style="margin:0"><a class="btn vio" href="#ld">الدخول إلى القسم</a><span class="sm muted" id="ldHomeCount"></span></div>
-      </div>
     </div>
 
     <div class="sec">
@@ -935,6 +909,14 @@ body.gated{overflow:hidden}
     </div>
 
     <div class="sec">
+      <div class="card ld-banner">
+        <div class="ld-ico" aria-hidden="true">🤝</div>
+        <div style="flex:1;min-width:240px"><span class="eyebrow">محور التركيز</span><h2>دعم طلبة صعوبات التعلم في مختبر الحاسوب</h2><p class="sm">تعرّف/ي على المؤشرات داخل الحصة، ثم شارك/ي خطة الدعم ومرحلتها وشواهدها.</p></div>
+        <div class="actions" style="margin:0"><a class="btn vio" href="#ld">الدخول إلى القسم</a><span class="sm muted" id="ldHomeCount"></span></div>
+      </div>
+    </div>
+
+    <div class="sec">
       <div class="sec-h"><div><h2>موارد مختارة</h2><p>أدوات للموقف الصفي، وورش وأدلة، وإبداعات الزملاء</p></div><a class="btn s" href="#tools">كل الموارد ←</a></div>
       <div class="seg" role="tablist" aria-label="نوع المورد">
         <button type="button" role="tab" aria-selected="true" data-pane="paneTools">⏱️ أدوات الموقف الصفي</button>
@@ -944,6 +926,24 @@ body.gated{overflow:hidden}
       <div class="pane" id="paneTools"><div class="tools" id="homeTools"></div></div>
       <div class="pane" id="paneWork" hidden><div class="inits" id="homeWorkshops"></div></div>
       <div class="pane" id="paneShow" hidden><div class="actions owner-only" style="margin:0 0 10px"><button class="btn s" type="button" data-act="new-show">+ إضافة منصة أو مورد</button></div><div class="inits" id="homeShow"></div></div>
+    </div>
+
+    <div class="kpis kstrip" style="margin-top:34px">
+      <div class="card kpi"><span class="v num" id="k-teachers">0</span><span class="l">عضوًا مشاركًا</span></div>
+      <div class="card kpi"><span class="v num" id="k-practices">0</span><span class="l">تجربة وممارسة منشورة</span></div>
+      <div class="card kpi"><span class="v num" id="k-rooms">0</span><span class="l">نقاشًا حول الدروس</span></div>
+      <div class="card kpi"><span class="v num" id="k-schools">0</span><span class="l">مدرسة مشاركة</span></div>
+      <div class="card kpi"><span class="v num" id="k-visitors">0</span><span class="l">زائرًا للمنصة</span></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><div><h2>تفاعل معنا</h2><p>صوّت/ي في سؤال الأسبوع، وتعرّف/ي على أكثر الزملاء والزميلات عطاءً، وتابع/ي ما يحدث الآن في المنصة</p></div></div>
+      <div class="inter">
+        <div class="card poll" id="pollBox"></div>
+        <div class="card lb" id="lbBox"></div>
+      </div>
+      <h3 class="mini-h" style="margin-top:18px">يحدث الآن في المنصة</h3>
+      <div class="feed" id="feed"></div>
     </div>
   </section>
 
