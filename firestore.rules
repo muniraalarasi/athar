@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isOwner() {
+      return signedIn()
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.lower() in [
+          'muniraalharasi567@gmail.com',
+          'maksyslb@gmail.com',
+          'ainajlahamdan@gmail.com'
+        ];
+    }
+    function isTeam() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/site/team)
+        && request.auth.uid in get(/databases/$(database)/documents/site/team).data.ids;
+    }
+    function isManager() { return isOwner() || isTeam(); }
+    function isSelf(uid) { return signedIn() && request.auth.uid == uid; }
+
+    // محتوى عام: يقرؤه الجميع، ويديره الفريق والمالكات
+    match /models/{id}      { allow read: if true; allow write: if isManager(); }
+    match /initiatives/{id} { allow read: if true; allow write: if isManager(); }
+    match /showcase/{id}    { allow read: if true; allow write: if isManager(); }
+    match /polls/{id}       { allow read: if true; allow write: if isManager(); }
+
+    // إعدادات المنصة وفريق الإدارة: تحدده المالكات فقط
+    match /site/{id}        { allow read: if true; allow write: if isOwner(); }
+
+    // مشاركات المعلمين: يقرؤها من سجّل دخوله، ويكتب كل شخص في مستنده فقط
+    match /profiles/{uid}   { allow read: if signedIn(); allow write: if isSelf(uid) || isOwner(); }
+    match /practices/{uid}  { allow read: if signedIn(); allow write: if isSelf(uid) || isOwner(); }
+    match /talk/{uid}       { allow read: if signedIn(); allow write: if isSelf(uid) || isOwner(); }
+
+    // الاحتياجات التدريبية: يراها صاحبها والمالكات فقط
+    match /needs/{uid} {
+      allow read: if isSelf(uid) || isOwner();
+      allow create, update: if isSelf(uid);
+      allow delete: if isSelf(uid) || isOwner();
+    }
+  }
+}
