@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تيمر النحلة النشيطة السحري</title>
+    <!-- تحميل Tailwind CSS للتصميم -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- خط عربي طفولي ومريح -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .bouncing {
+            animation: bounce 1.2s infinite alternate ease-in-out;
+        }
+        @keyframes bounce {
+            from { transform: translateY(0) scale(1); }
+            to { transform: translateY(-16px) scale(1.05); }
+        }
+        .honey-pattern {
+            background-image: radial-gradient(#f59e0b 2px, transparent 2px);
+            background-size: 30px 30px;
+            opacity: 0.15;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center p-4 relative">
+
+    <!-- خلفية زخرفية بنمط خلية النحل -->
+    <div class="absolute inset-0 honey-pattern pointer-events-none"></div>
+
+    <!-- البطاقة الرئيسية -->
+    <div class="bg-white/95 backdrop-blur-md rounded-[35px] shadow-2xl p-6 md:p-8 max-w-lg w-full z-10 border-4 border-amber-400 relative text-center">
+        
+        <!-- رأس التيمر -->
+        <div class="flex items-center justify-center gap-2 mb-2">
+            <span class="text-3xl">🌸</span>
+            <h1 class="text-3xl md:text-4xl font-black text-amber-700 drop-shadow-sm">مغامرة النحلة النشيطة</h1>
+            <span class="text-3xl">🍯</span>
+        </div>
+        <p class="text-amber-800/70 font-bold mb-5 text-sm">ساعد نحولتنا للوصول إلى خلية العسل قبل انتهاء الوقت!</p>
+
+        <!-- أزرار اختيار الوقت السريع -->
+        <div class="grid grid-cols-3 gap-3 mb-6">
+            <button onclick="setPresetTime(60)" class="time-preset bg-amber-100 hover:bg-amber-200 text-amber-900 font-black py-3 rounded-2xl text-base transition border-2 border-amber-300 shadow-sm active:scale-95">دقيقة 1</button>
+            <button onclick="setPresetTime(180)" class="time-preset bg-amber-200 hover:bg-amber-300 text-amber-900 font-black py-3 rounded-2xl text-base transition border-2 border-amber-400 shadow-sm active:scale-95">3 دقائق</button>
+            <button onclick="setPresetTime(300)" class="time-preset bg-amber-300 hover:bg-amber-400 text-amber-950 font-black py-3 rounded-2xl text-base transition border-2 border-amber-500 shadow-sm active:scale-95">5 دقائق</button>
+        </div>
+
+        <!-- شاشة العد التنازلي والمسار البصري -->
+        <div class="bg-gradient-to-br from-amber-600 to-yellow-600 text-white rounded-3xl p-6 shadow-inner mb-6 relative overflow-hidden border-2 border-amber-500">
+            
+            <!-- رسالة تفاعلية للنحلة -->
+            <div id="beeMessage" class="text-amber-100 font-black text-sm mb-2">🐝 أنا مستعدة للأنطلاق نحو الخلية!</div>
+            
+            <!-- العداد الرقمي الكبير -->
+            <div id="timerDisplay" class="text-6xl md:text-7xl font-black tracking-wider text-yellow-200 drop-shadow-md my-2">03:00</div>
+
+            <!-- شريط التقدم المرئي (النحلة تسير نحو الخلية 🍯) -->
+            <div class="w-full bg-amber-950/60 rounded-full h-8 p-1.5 relative mt-6 border border-amber-400/50 shadow-inner">
+                <!-- شريط التعبئة -->
+                <div id="progressBar" class="bg-gradient-to-r from-yellow-300 via-amber-300 to-emerald-400 h-full rounded-full transition-all duration-300 w-full"></div>
+                <!-- أيقونة النحلة المتحركة فوق الشريط -->
+                <div id="movingBee" class="absolute -top-3.5 right-0 transition-all duration-300 transform translate-x-2 text-3xl bouncing">🐝</div>
+            </div>
+            
+            <!-- بدايات ونهايات المسار -->
+            <div class="flex justify-between text-xs text-amber-100 mt-2 px-1 font-black">
+                <span>🏁 خط الانطلاق</span>
+                <span id="finishGoal">خلية العسل 🍯</span>
+            </div>
+        </div>
+
+        <!-- أزرار التحكم بالتشغيل -->
+        <div class="flex flex-wrap justify-center gap-3">
+            <button id="startBtn" onclick="toggleTimer()" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-lg font-black px-8 py-3.5 rounded-2xl shadow-lg transition transform hover:scale-105 active:scale-95 flex items-center gap-2">
+                <span>▶️</span> هيا نبدأ!
+            </button>
+            <button onclick="resetTimer()" class="bg-gradient-to-r from-rose-500 to-red-500 hover:from-rose-600 hover:to-red-600 text-white text-lg font-black px-6 py-3.5 rounded-2xl shadow-lg transition transform hover:scale-105 active:scale-95 flex items-center gap-2">
+                <span>🔄</span> من جديد
+            </button>
+        </div>
+
+    </div>
+
+    <!-- نافذة الاحتفال النهائية -->
+    <div id="celebrationModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-[30px] p-8 max-w-md w-full text-center shadow-2xl border-4 border-amber-400 transform scale-95 transition-all duration-300">
+            <div class="text-6xl mb-3 bouncing">🍯🐝🎉</div>
+            <h2 class="text-3xl font-black text-amber-700 mb-2">ألف مبروك يا أبطال!</h2>
+            <p id="celebrationText" class="text-gray-600 font-bold mb-6 text-base">لقد وصلت النحلة النشيطة إلى الخلية بنجاح وجمعنا ألذ عسل! 🌸</p>
+            <button onclick="closeCelebration()" class="bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-amber-950 font-black text-lg px-8 py-3 rounded-2xl shadow-md transition transform hover:scale-105">
+                تحدي جديد 🌟
+            </button>
+        </div>
+    </div>
+
+    <!-- كود JavaScript مع Web Audio API للأصوات والعد الدقيق -->
+    <script>
+        let totalSeconds = 180; // 3 دقائق افتراضية
+        let remainingSeconds = 180;
+        let timerInterval = null;
+        let isRunning = false;
+        let targetEndTime = 0;
+        let audioCtx = null;
+
+        // تهيئة سياق الصوت (Web Audio API)
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // تشغيل نغمة لطيفة عند النقر أو بدء العداد
+        function playTone(frequency, type, duration, delay = 0) {
+            try {
+                initAudio();
+                setTimeout(() => {
+                    if (!audioCtx) return;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+                    
+                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                    
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + duration);
+                }, delay);
+            } catch(e) {
+                console.log("Audio skipped");
+            }
+        }
+
+        // تشغيل صوت التنبيه الهادئ عند العد التنازلي للثواني الأخيرة
+        function playTickSound() {
+            playTone(440, 'sine', 0.1);
+        }
+
+        // نغمة احتفالية بهيجة عند الوصول لنهاية الوقت
+        function playCelebrationMelody() {
+            const melody = [
+                {freq: 523.25, duration: 0.2, delay: 0},   // Do
+                {freq: 659.25, duration: 0.2, delay: 150}, // Mi
+                {freq: 783.99, duration: 0.2, delay: 300}, // Sol
+                {freq: 1046.50, duration: 0.4, delay: 450} // High Do
+            ];
+            melody.forEach(note => {
+                playTone(note.freq, 'triangle', note.duration, note.delay);
+            });
+        }
+
+        function setPresetTime(seconds) {
+            if (isRunning) pauseTimer();
+            totalSeconds = seconds;
+            remainingSeconds = seconds;
+            updateDisplay();
+            playTone(600, 'sine', 0.15);
+        }
+
+        function updateDisplay() {
+            const mins = Math.floor(remainingSeconds / 60);
+            const secs = remainingSeconds % 60;
+            document.getElementById('timerDisplay').innerText = 
+                String(mins).padStart(2, '0') + ":" + String(secs).padStart(2, '0');
+            
+            // حساب نسبة تقدم النحلة على الشريط
+            const percentage = totalSeconds > 0 ? (remainingSeconds / totalSeconds) * 100 : 0;
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('movingBee').style.right = (100 - percentage) + '%';
+
+            // تحديث رسالة النحلة بناءً على الوقت المتبقي
+            const msgEl = document.getElementById('beeMessage');
+            if (remainingSeconds <= 10 && remainingSeconds > 0) {
+                msgEl.innerText = `⚠️ أسرعوا! اقتربنا بشدة من الخلية (${remainingSeconds} ثوانٍ)`;
+                if (remainingSeconds <= 5) playTickSound();
+            } else if (percentage > 50) {
+                msgEl.innerText = `🐝 نحولتنا تطير بحماس نحو الخلية!`;
+            } else if (percentage > 20) {
+                msgEl.innerText = `🍯 اقتربنا من عبق العسل الجميل!`;
+            } else {
+                msgEl.innerText = `✨ الخطوات الأخيرة يا أبطال!`;
+            }
+        }
+
+        function toggleTimer() {
+            initAudio();
+            if (!isRunning) {
+                startTimer();
+            } else {
+                pauseTimer();
+            }
+        }
+
+        function startTimer() {
+            if (remainingSeconds <= 0) {
+                remainingSeconds = totalSeconds;
+            }
+            
+            // اعتماد التوقيت الحقيقي بالمللي ثانية لضمان دقة العد 100%
+            targetEndTime = Date.now() + (remainingSeconds * 1000);
+            isRunning = true;
+
+            document.getElementById('startBtn').innerHTML = '<span>⏸️</span> إيقاف مؤقت';
+            document.getElementById('startBtn').className = "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-lg font-black px-8 py-3.5 rounded-2xl shadow-lg transition transform hover:scale-105 active:scale-95 flex items-center gap-2";
+
+            playTone(800, 'sine', 0.2);
+
+            timerInterval = setInterval(() => {
+                const now = Date.now();
+                const diffMs = targetEndTime - now;
+                remainingSeconds = Math.max(0, Math.ceil(diffMs / 1000));
+                
+                updateDisplay();
+
+                if (remainingSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    playCelebrationMelody();
+                    showCelebrationModal();
+                }
+            }, 100);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            document.getElementById('startBtn').innerHTML = '<span>▶️</span> متابعة الطيران';
+            document.getElementById('startBtn').className = "bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-lg font-black px-8 py-3.5 rounded-2xl shadow-lg transition transform hover:scale-105 active:scale-95 flex items-center gap-2";
+            playTone(400, 'sine', 0.15);
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            remainingSeconds = totalSeconds;
+            updateDisplay();
+            document.getElementById('startBtn').innerHTML = '<span>▶️</span> هيا نبدأ!';
+            document.getElementById('startBtn').className = "bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-lg font-black px-8 py-3.5 rounded-2xl shadow-lg transition transform hover:scale-105 active:scale-95 flex items-center gap-2";
+            playTone(500, 'sine', 0.15);
+        }
+
+        function showCelebrationModal() {
+            const modal = document.getElementById('celebrationModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeCelebration() {
+            const modal = document.getElementById('celebrationModal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+            resetTimer();
+        }
+
+        // التهيئة الأولية للشاشة
+        updateDisplay();
+    </script>
+</body>
+</html>
