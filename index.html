@@ -864,6 +864,20 @@ transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
 .pcover{height:auto;min-height:176px;padding:16px 16px 14px}
 #homeInits .init .icover .ic-ico{width:42px;height:42px;border-radius:13px;font-size:23px}
 @media (prefers-reduced-motion:reduce){.pcover .pc-ico,.init .icover .ic-ico,.show .cover.scover .sc-ico{transition:none}}
+/* تنظيف: خط واضح، بلا حركات خلفية، الشعار يمينًا */
+:root,[data-theme]{--display:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif!important;--body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif!important}
+body{font-size:16.5px!important;line-height:1.8}
+h1,h2,h3,h4{font-weight:700;letter-spacing:0}
+.sm,.pcard .who,.muted{font-size:14.5px}
+#bgfx,.mast-deco .orb,.mast-deco .stars{display:none!important}
+.hero2::before{display:none!important}
+.ld-banner,.sup-strip{animation:none!important}
+.kstrip .kpi::before{animation:none!important}
+.sec-h h2::before{animation:none!important}
+.hero2 h2{background:none!important;-webkit-text-fill-color:currentColor;color:var(--teal)!important;animation:none!important}
+.halo{float:right!important;margin:0 0 8px 18px!important;animation:none!important}
+.halo .hero-logo{animation:none!important}
+.halo::after{display:none}
 /* روابط مهمة */
 .qlinks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
 .qlink{display:flex;gap:10px;align-items:center;padding:9px 12px;text-decoration:none;color:var(--ink);border-radius:14px}
@@ -1268,7 +1282,7 @@ transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
   <a href="#supervisor" data-b="supervisor"><span>⭐</span>الإشراف</a>
 </nav>
 
-<footer><div class="wrap"><span>«منصة أثر» · مجتمع ممارسة لمعلمي ومعلمات تقنية المعلومات</span><span class="flinks"><a href="https://lms.moe.gov.om/" target="_blank" rel="noopener">منصة نور</a><a href="https://home.moe.gov.om/" target="_blank" rel="noopener">البوابة التعليمية</a><a href="https://ejada.gov.om/" target="_blank" rel="noopener">إجادة</a><a href="https://pext-hrss.mol.gov.om/OA_HTML/AppsLocalLogin.jsp" target="_blank" rel="noopener">مورد</a><a href="https://ict.moe.gov.om/" target="_blank" rel="noopener">تقنيات التعلم</a></span><span>مالكات المنصة: أ. منيرة الحراصي، مشرفة تقنية المعلومات · أ. عبير اليحمدي، معلمة تقنية المعلومات · أ. نجلاء الزدجالي، معلمة تقنية المعلومات</span></div></footer>
+<footer><div class="wrap"><span>«منصة أثر» · مجتمع ممارسة لمعلمي ومعلمات تقنية المعلومات</span><span>مالكات المنصة: أ. منيرة الحراصي، مشرفة تقنية المعلومات · أ. عبير اليحمدي، معلمة تقنية المعلومات · أ. نجلاء الزدجالي، معلمة تقنية المعلومات</span></div></footer>
 
 <!-- Detail dialog -->
 <dialog id="dDetail" aria-labelledby="dTitle">
