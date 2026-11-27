@@ -923,11 +923,9 @@ nav.tabs>a.basma-link{font-weight:700}
 
     <div class="card hero-main hero2 atelier-hero">
       <div class="hero-copy">
-        <span class="hero-kicker"><span aria-hidden="true">✧</span> مساحة تجمعنا، وأثر يبقى</span>
         <h2>نتشارك المعرفة.<br><span>ونصنع الأثر.</span></h2>
-        <p class="hero-lead">معًا نُلهم… لنصنع أثرًا</p>
         <p class="hero-desc">مجتمع لمعلمي ومعلمات تقنية المعلومات، نلتقي فيه لنتبادل الخبرات، ونطوّر ممارساتنا، ونلهم تعلّمًا أفضل لكل طالب.</p>
-        <div class="actions"><button class="btn pri" type="button" data-scroll="homeGrades">استكشف الصفوف والدروس</button><button class="btn hero-share" type="button" data-act="new-practice">شارك/ي تجربتك</button></div>
+        <div class="actions"><button class="btn pri" type="button" data-scroll="homeGrades">استكشف الصفوف والدروس</button><a class="btn hero-share" href="#practices">تصفّح التجارب ←</a></div>
         <button class="home-search" type="button" id="homeSearch"><span class="search-mark" aria-hidden="true">⌕</span><span>ابحث/ي عن درس، تجربة أو مورد…</span><kbd>Ctrl K</kbd></button>
       </div>
       <div class="hero-collage" aria-hidden="true">
@@ -1574,12 +1572,29 @@ window.addEventListener("hashchange",()=>{const h=location.hash;route();if(h!=="
 /* ---------- Render ---------- */
 function renderAll(){decideGate();renderMe();try{renderIdeas();}catch(e){}renderHome();renderTools();renderLD();renderShowcase();renderPractices();renderSupervisor();renderInits();renderRooms();renderNeeds();if($("#v-grade").classList.contains("on"))renderGrade();if($("#v-room").classList.contains("on"))renderRoom();}
 
+function acctMenu(nm,school){
+  const wrap=el("span",{class:"acct"});
+  const btn=el("button",{class:"acct-btn",type:"button","aria-haspopup":"menu","aria-expanded":"false",title:"حسابي: "+nm},el("span",{class:"acct-av","aria-hidden":"true",text:(nm.replace(/^أ\.\s*/,"").trim()[0]||"👤")}),el("span",{class:"acct-nm",text:nm.split(" ")[0]}),el("span",{class:"acct-car","aria-hidden":"true",text:"▾"}));
+  const menu=el("div",{class:"acct-menu",role:"menu",hidden:""});
+  const close=()=>{menu.hidden=true;btn.setAttribute("aria-expanded","false");};
+  const item=(t,fn)=>el("button",{type:"button",role:"menuitem",onclick:()=>{close();fn();}},t);
+  btn.addEventListener("click",e=>{e.stopPropagation();const o=menu.hidden;menu.replaceChildren(
+    el("div",{class:"acct-hd"},el("b",{text:nm}),school?el("small",{text:school}):null),
+    item("✎ تعديل الملف الشخصي",()=>openProfile()),
+    isOwner?item("📢 إعلان جديد",()=>openAnnounce()):null,
+    item("⎋ تسجيل الخروج",()=>window.__signOut&&__signOut()));
+    if(o){if(menu.parentNode!==document.body)document.body.append(menu);const r=btn.getBoundingClientRect();menu.hidden=false;const w=menu.offsetWidth;let left=r.left;if(left+w>innerWidth-12)left=innerWidth-12-w;menu.style.left=Math.max(12,left)+"px";menu.style.top=(r.bottom+8)+"px";}else menu.hidden=true;btn.setAttribute("aria-expanded",String(o));if(o)menu.querySelector("[role=menuitem]")?.focus();});
+  document.addEventListener("click",e=>{if(!wrap.contains(e.target)&&!menu.contains(e.target))close();});
+  addEventListener("scroll",close,{passive:true});
+  [wrap,menu].forEach(x=>x.addEventListener("keydown",e=>{if(e.key==="Escape"){close();btn.focus();}}));
+  wrap.append(btn,menu);return wrap;
+}
 function renderMe(){
   const b=$("#meBox");b.replaceChildren();
   if(!db)return;
   if(myId){const p=profiles[myId];
     window.__me=p&&p.name?{name:s(p.name),school:s(p.school),role:s(p.role)}:null;
-    if(p&&p.name)b.append(el("span",{class:"mechip"},"👤 ",el("b",{},s(p.name).split(/\s+/).slice(0,2).join(" ")),el("button",{type:"button",onclick:()=>openProfile()},"تعديل"),el("button",{type:"button",title:"تسجيل الخروج",onclick:()=>window.__signOut&&__signOut()},"خروج")));
+    if(p&&p.name)b.append(acctMenu(s(p.name).split(/\s+/).slice(0,2).join(" "),s(p.school)));
     else b.append(el("button",{class:"srch-btn",type:"button",onclick:()=>showGate(true)},"🔑 تسجيل الدخول"));}
   else b.append(el("button",{class:"srch-btn",type:"button",onclick:()=>window.__signIn&&__signIn()},"🔑 الدخول بحساب Google"));
 }
@@ -2131,7 +2146,7 @@ function renderAnn(){
   let bar=$("#annBar");if(!bar){bar=el("div",{id:"annBar",class:"ann"});const c=$("#crumbs");c.parentNode.insertBefore(bar,c);}
   bar.replaceChildren();const a=announces()[0];
   let hidden="";try{hidden=localStorage.getItem("athar-ann-hide")||"";}catch(e){}
-  if(!a||(hidden===a.id&&!isOwner)){bar.hidden=true;if(isOwner){bar.hidden=false;bar.classList.add("empty-ann");bar.append(el("span",{class:"sm",text:"لا يوجد إعلان حالي."}),el("button",{class:"btn s",type:"button",onclick:openAnnounce},"📢 إعلان جديد"));}return;}
+  if(!a||(hidden===a.id&&!isOwner)){bar.hidden=true;return;}
   bar.classList.remove("empty-ann");bar.hidden=false;
   const link=safeUrl(a.link);
   bar.append(el("span",{class:"ann-ic","aria-hidden":"true",text:"📢"}),el("p",null,s(a.title)," ",link?el("a",{href:link,target:"_blank",rel:"noopener noreferrer",text:"التفاصيل ←"}):null),
@@ -2944,6 +2959,24 @@ html.fx-still .ha-a .orbit,html.fx-still .ha-a .emblem::before,html.fx-still .ha
 #v-home>.pathways{display:none!important}            /* المحاور الأربعة صارت أزرارًا حول الشعار في الواجهة */
 #homeShow>.card:nth-child(n+5),#homeWorkshops>.card:nth-child(n+5){display:none!important}
 #v-home>.kstrip{margin-top:30px!important;margin-bottom:30px}
+
+/* ===== أعلى الصفحة والواجهة بلا تكرار ===== */
+body:has(#v-home.on) .me .srch-btn[aria-label="البحث في المنصة"]{display:none!important}   /* في الرئيسية تكفي خانة البحث في الواجهة */
+.acct{position:relative;display:inline-flex}
+.atelier-hero a.hero-share{display:inline-flex;align-items:center;text-decoration:none}
+.atelier-hero a.hero-share:before{content:none}
+.acct-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 10px 0 6px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.acct-btn:hover,.acct-btn[aria-expanded=true]{border-color:var(--tone)}
+.acct-av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;font-weight:800;font-size:15px;box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px var(--accent)}
+.acct-car{font-size:11px;color:var(--muted)}
+.acct-menu{position:fixed;z-index:320;width:min(290px,calc(100vw - 24px));white-space:normal;direction:rtl;font-family:var(--body);background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 40px -14px rgba(0,0,0,.28);padding:8px;display:grid;gap:2px}
+.acct-menu[hidden]{display:none}
+.acct-hd{padding:8px 10px 10px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.acct-hd b{display:block;font-size:16px;color:var(--ink)}
+.acct-hd small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.acct-menu [role=menuitem]{display:block;width:100%;text-align:right;padding:10px 12px;border:0;border-radius:10px;background:none;color:var(--ink);font:inherit;font-size:15px;font-weight:600;cursor:pointer;min-height:0}
+.acct-menu [role=menuitem]:hover,.acct-menu [role=menuitem]:focus-visible{background:var(--tone-soft);color:var(--tone);outline:none}
+@media(max-width:760px){html .me #meBox:has(.acct){display:contents!important}.acct-nm,.acct-car{display:none}.acct-btn{padding:0 4px;min-height:39px}}
 
 /* الخلفية */
 html.fx-on{background:var(--page)!important}
