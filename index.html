@@ -989,7 +989,7 @@ nav.tabs>a.basma-link{font-weight:700}
           <a href="#grade-1" data-v="grade"><b>الصفوف 1–12</b><small>الخطة والدروس وتجارب كل صف</small></a>
           <a href="#ld" data-v="ld"><b>صعوبات التعلم</b><small>الرصد والاستراتيجيات وخطط الدعم</small></a>
           <a href="#tools" data-v="tools"><b>أدوات وورش</b><small>ورش، أدلة، كتب تفاعلية</small></a>
-          <a href="#resources" data-v="resources"><b>مرجعيات</b><small>النشرة التوجيهية ووثيقة التقويم</small></a>
+          <a href="#resources" data-v="resources"><b>مرجعيات</b><small>النشرة التوجيهية ووثيقة التقويم والتقويم الدراسي</small></a>
         </div>
       </div>
       <div class="dd" data-group="community">
@@ -1326,7 +1326,7 @@ nav.tabs>a.basma-link{font-weight:700}
 
   <!-- RESOURCES -->
   <section class="view" id="v-resources">
-    <div class="sec-h"><h2>مرجعيات المعلم والمعلمة</h2><p>من النشرة التوجيهية ووثيقة تقويم تعلم الطلبة 2026/2027</p></div>
+    <div class="sec-h"><h2>مرجعيات المعلم والمعلمة</h2><p>النشرة التوجيهية، ووثيقة تقويم تعلم الطلبة، والتقويم الدراسي 2026/2027</p></div>
     <div class="res" id="resFiles"></div>
     <div class="sec">
       <div class="sec-h"><h2>توزيع درجات أدوات التقويم المستمر</h2><p>وثيقة تقويم تعلم الطلبة في مادة تقنية المعلومات (1–12)</p></div>
@@ -2155,6 +2155,7 @@ function buildStatic(){
   const R=$("#resFiles");[
     {href:"bulletin-2026-2027.pdf",t:"النشرة التوجيهية 2026/2027",d:"توجيهات عامة، وعدد الحصص، وخطط توزيع المحتوى للصفوف 1–12، والتصويبات.",c:"#b33a3a",k:"PDF"},
     {href:"assessment-doc.pdf",t:"وثيقة تقويم تعلم الطلبة",d:"أدوات التقويم المستمر ومواصفاتها الفنية واستمارات الرصد للصفوف 1–12.",c:"#b33a3a",k:"PDF"},
+    {href:"calendar-s2-2026-2027.pdf",t:"التقويم الدراسي – الفصل الثاني 2026/2027",d:"تقويم وزارة التعليم من 31/1/2027 إلى 13/7/2027: ‏23 أسبوعًا و109 أيام دراسية، مع الإجازات والمناسبات وأيام الامتحانات شهرًا بشهر.",c:"#b33a3a",k:"PDF"},
     {href:"#grade-1",t:"الخطط الفصلية للصفوف 1–12",d:"الفصل الدراسي الأول 2026/2027 معروضة في صفحة كل صف، مع مدارس الفترة الواحدة والفترتين.",c:"#1f7a45",k:"خطة",self:true}
   ].forEach(r=>R.append(el("a",{class:"card",href:r.href,target:r.self?null:"_blank",rel:r.self?null:"noopener"},el("span",{class:"ico",style:"background:"+r.c,text:r.k}),el("span",null,el("b",{text:r.t}),el("br"),el("span",{class:"sm muted",text:r.d})))));
   document.addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(b&&b.dataset.act==="new-practice")openPForm(null,{});if(b&&b.dataset.act==="new-show")openShow(null);const c=e.target.closest("[data-close]");if(c)c.closest("dialog").close();});
