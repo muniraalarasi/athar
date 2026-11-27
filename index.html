@@ -2891,6 +2891,60 @@ html.fx-still .logo-ring::before,html.fx-still .logo-ring::after,html.fx-still .
 @media(max-width:760px){.brand .logo-ring .logo{width:58px!important;height:58px!important}.logo-ring{padding:4px}}
 @media (prefers-reduced-motion: reduce){.logo-ring::before,.logo-ring::after,.logo-ring .orb{animation:none}}
 
+/* ===== منطقة الصفوف: مجموعات حسب الحلقة وبطاقات أوضح ===== */
+#gradeTiles.grades{display:block!important}
+.gband{margin:0 0 26px}
+.gband:last-child{margin-bottom:6px}
+.gband[hidden]{display:none!important}
+.gband-h{display:flex;align-items:center;gap:12px;margin:0 0 14px}
+.gband-h .dot{width:14px;height:14px;border-radius:5px;background:var(--bc);box-shadow:0 0 0 4px color-mix(in srgb,var(--bc) 18%,transparent);flex:none}
+.gband-h b{font-size:20px;font-weight:800;color:var(--ink)}
+.gband-h small{font-size:14px;color:var(--muted);background:color-mix(in srgb,var(--bc) 10%,var(--paper));border:1px solid color-mix(in srgb,var(--bc) 22%,var(--line));padding:1px 12px;border-radius:99px}
+.gband-h:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,color-mix(in srgb,var(--bc) 30%,transparent),transparent)}
+[dir=rtl] .gband-h:after,.gband-h:after{background:linear-gradient(270deg,color-mix(in srgb,var(--bc) 35%,transparent),transparent)}
+.gband-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:14px}
+.gband[data-band=first]{--bc:var(--c1)}
+.gband[data-band=second]{--bc:color-mix(in srgb,var(--c1) 55%,var(--fx3))}
+.gband[data-band=post]{--bc:var(--c3)}
+[data-mode=dark] .gband[data-band=first]{--bc:var(--tone)}
+.gband .gt{display:grid!important;grid-template-columns:auto 1fr auto;grid-template-rows:auto auto;align-items:center;column-gap:14px;row-gap:2px;min-height:0!important;padding:16px 16px 16px 14px!important;border:1px solid color-mix(in srgb,var(--bc) 18%,var(--line))!important;border-inline-start:5px solid var(--bc)!important;border-radius:16px!important;background:var(--paper)!important;box-shadow:0 6px 18px -14px color-mix(in srgb,var(--c2) 60%,transparent)!important;transition:transform .2s,box-shadow .2s,border-color .2s}
+.gband .gt:hover{transform:translateY(-3px)!important;border-color:color-mix(in srgb,var(--bc) 45%,var(--line))!important;box-shadow:0 14px 26px -14px color-mix(in srgb,var(--c2) 70%,transparent)!important}
+.gband .gt:before,.gband .gt:after{display:none!important}
+.gband .gt .gn{grid-row:1/3;grid-column:1;width:50px!important;height:50px!important;margin:0!important;border-radius:14px!important;font-size:24px!important;background:color-mix(in srgb,var(--bc) 13%,var(--paper))!important;color:var(--bc)!important;transform:none!important}
+[data-mode=dark] .gband .gt .gn{background:color-mix(in srgb,var(--bc) 25%,var(--paper))!important;color:var(--ink)!important}
+.gband .gt .gl{grid-column:2;grid-row:1;font-size:19px!important;line-height:1.4!important;position:static!important}
+.gband .gt .gm{grid-column:2;grid-row:2;font-size:14px!important;line-height:1.5!important;position:static!important}
+.gband .gt .grade-visual{grid-column:3;grid-row:1/3;position:static!important;width:46px!important;height:46px!important;margin:0!important;opacity:.95}
+.gband .gt .grade-band{display:none!important}
+@media(max-width:760px){.gband-grid{grid-template-columns:1fr 1fr;gap:10px}.gband .gt{grid-template-columns:auto 1fr;padding:12px!important;column-gap:10px}.gband .gt .grade-visual{display:none}.gband .gt .gn{width:40px!important;height:40px!important;font-size:20px!important}.gband .gt .gl{font-size:16px!important}.gband .gt .gm{font-size:12.5px!important}.gband-h b{font-size:17px}}
+@media(max-width:420px){.gband-grid{grid-template-columns:1fr}}
+
+/* ===== أغلفة الأدوات والورش والإبداعات تتبع المظهر ===== */
+.show .cover.scover,.show .cover.s-tool{background:linear-gradient(135deg,var(--c2),var(--c1))!important}
+.show .cover.s-work{background:linear-gradient(135deg,color-mix(in srgb,var(--c3) 60%,#24160a),var(--c3))!important}
+.show .cover.s-show{background:linear-gradient(135deg,var(--c1),color-mix(in srgb,var(--c1) 55%,var(--fx3)))!important}
+.show .cover.s-book{background:linear-gradient(135deg,var(--c2),color-mix(in srgb,var(--c1) 60%,var(--fx3)))!important}
+.show .cover.s-game{background:linear-gradient(135deg,color-mix(in srgb,var(--c3) 55%,var(--c2)),var(--c3))!important}
+.init .icover.k-oth{background:linear-gradient(135deg,var(--c1),color-mix(in srgb,var(--c1) 55%,var(--c3)))!important}
+.card.tool .face{background:linear-gradient(135deg,var(--tone-soft),color-mix(in srgb,var(--tone-soft) 55%,var(--gold-soft)))!important}
+.card.tool .face .ring{border-color:var(--tone)!important;box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 22%,transparent)!important}
+/* إطارات الصور والبطاقات */
+.card.init,.card.tool,.card.pcard,.card.show{border-color:color-mix(in srgb,var(--tone) 16%,var(--line))!important}
+.card.init:hover,.card.tool:hover,.card.pcard:hover{border-color:color-mix(in srgb,var(--tone) 40%,var(--line))!important}
+.card.init>.cover:has(>img),.card .thumb{border-bottom:4px solid var(--tone)!important}
+.card.init>.cover:has(>img){box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--tone) 20%,transparent)}
+.fx-cover{background:var(--c2)!important;box-shadow:0 14px 30px color-mix(in srgb,var(--c2) 28%,transparent),0 3px 8px color-mix(in srgb,var(--c2) 18%,transparent)!important}
+.flash.fx .fx-veil{background:linear-gradient(0deg,color-mix(in srgb,var(--c2) 92%,transparent),transparent)!important}
+.flash.fx .fx-veil small{color:var(--gold-soft)!important}
+#imgBig{border:4px solid var(--tone);border-radius:14px}
+/* أيقونات الأغلفة الجديدة */
+.sc-ico.svg-ico,.ic-ico.svg-ico{font-size:0!important}
+.svg-ico svg{width:74%;height:74%;fill:none;stroke:var(--c2);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;position:relative;z-index:1}
+.svg-ico svg .f{fill:var(--c3);stroke:var(--c2)}
+.svg-ico svg .f2{fill:color-mix(in srgb,var(--c1) 22%,#fff)}
+.tag.g{background:var(--gold-soft)!important;color:var(--gold-ink)!important}
+[data-mode=dark] .tag.g{color:var(--gold-ink)!important}
+
 /* الخلفية */
 html.fx-on{background:var(--page)!important}
 html.fx-on body{background:transparent!important}
@@ -3019,6 +3073,54 @@ html.fx-still .fx-btn .fx-paused{display:inline-block}
  /* إطار الشعار المتحرك */
  document.querySelectorAll('.brand .logo, img.glogo').forEach(img=>{if(img.parentElement.classList.contains('logo-ring'))return;const r=document.createElement('span');r.className='logo-ring'+(img.classList.contains('glogo')?' gate-ring':'');img.before(r);r.append(img);const o=document.createElement('i');o.className='orb';o.setAttribute('aria-hidden','true');r.append(o);});
  syncUI();applyMotion();
+ /* ===== منطقة الصفوف: تجميع حسب الحلقة ===== */
+ (function(){
+  const gt=document.getElementById('gradeTiles');if(!gt)return;
+  const B=[['first','الحلقة الأولى','الصفوف ١–٤'],['second','الحلقة الثانية','الصفوف ٥–١٠'],['post','ما بعد الأساسي','الصفوف ١١–١٢']];
+  let busy=false;
+  function cur(){const b=document.querySelector('[data-stage-filter][aria-pressed=true]');return b?b.dataset.stageFilter:'all';}
+  function group(){if(busy)return;const tiles=[...gt.querySelectorAll(':scope > .gt')];if(!tiles.length)return;busy=true;
+   const bands={};B.forEach(([k,n,r])=>{const w=document.createElement('section');w.className='gband';w.dataset.band=k;w.setAttribute('aria-label',n);
+    w.innerHTML='<div class="gband-h"><span class="dot" aria-hidden="true"></span><b>'+n+'</b><small>'+r+'</small></div><div class="gband-grid"></div>';bands[k]=w;});
+   tiles.forEach(t=>{const g=Number((t.getAttribute('href')||'').split('-')[1]);const k=g<=4?'first':g<=10?'second':'post';t.hidden=false;bands[k].querySelector('.gband-grid').append(t);});
+   B.forEach(([k])=>gt.append(bands[k]));filter();busy=false;}
+  function filter(){const s=cur();gt.querySelectorAll('.gband').forEach(w=>{w.hidden=s!=='all'&&s!==w.dataset.band;w.querySelectorAll('.gt').forEach(t=>t.hidden=false);});}
+  new MutationObserver(()=>{if(!busy)setTimeout(group,0);}).observe(gt,{childList:true});
+  document.querySelectorAll('[data-stage-filter]').forEach(b=>b.addEventListener('click',()=>setTimeout(filter,0)));
+  setTimeout(group,0);
+ })();
+
+ /* ===== أيقونات الأغلفة: بدل الرموز التعبيرية ===== */
+ (function(){
+  const S={
+   trophy:'<path class="f" d="M8 4h8v5.5a4 4 0 0 1-8 0z"/><path d="M8 6.2H5.2a3 3 0 0 0 3.1 4.1M16 6.2h2.8a3 3 0 0 1-3.1 4.1M12 13.5v3"/><path class="f2" d="M9 16.5h6l.8 3.5H8.2z"/>',
+   wand:'<path d="M4.5 19.5l10-10"/><path class="f2" d="M13.2 8.3l2.5 2.5-1.4 1.4-2.5-2.5z"/><path class="f" d="M16.5 3l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/><path class="f" d="M19.5 11.5l.5 1.1 1.1.5-1.1.5-.5 1.1-.5-1.1-1.1-.5 1.1-.5z"/><path class="f" d="M9 3.5l.45 1 1 .45-1 .45L9 6.4l-.45-1-1-.45 1-.45z"/>',
+   toolbox:'<rect class="f2" x="3" y="8" width="18" height="11" rx="2"/><path d="M9 8V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 13h18"/><rect class="f" x="10.3" y="11.3" width="3.4" height="3.4" rx=".9"/>',
+   lms:'<rect class="f2" x="3" y="4" width="18" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4"/><path class="f" d="M7.5 8.6c1.5-.9 3-.9 4.5 0 1.5-.9 3-.9 4.5 0v4.2c-1.5-.9-3-.9-4.5 0-1.5-.9-3-.9-4.5 0z"/><path d="M12 8.6v4.2"/>',
+   ai:'<rect class="f2" x="6" y="6" width="12" height="12" rx="3"/><path d="M9.5 3v3M14.5 3v3M9.5 18v3M14.5 18v3M3 9.5h3M3 14.5h3M18 9.5h3M18 14.5h3"/><path class="f" d="M12 8.3l1.1 2.6 2.6 1.1-2.6 1.1L12 15.7l-1.1-2.6-2.6-1.1 2.6-1.1z"/>',
+   play:'<rect class="f2" x="2.5" y="5" width="19" height="14" rx="4"/><path class="f" d="M10 9.2v5.6l4.8-2.8z"/>',
+   board:'<rect class="f2" x="3" y="3.5" width="18" height="11.5" rx="1.6"/><path d="M12 15v3M8 21l4-3 4 3"/><path d="M6.5 11.5l3-3 2.2 2.2 4.3-4.2"/><circle class="f" cx="16" cy="6.5" r="1.6"/>',
+   rocket:'<path class="f2" d="M9 15l-2-2c1-4.2 4.6-8.6 11-9-.4 6.4-4.8 10-9 11z"/><path d="M6.5 15.5c-1.2 1.1-1.8 3.4-1.8 5 1.6 0 3.9-.6 5-1.8"/><circle class="f" cx="14.5" cy="9.5" r="1.7"/><path d="M7 13l-3-.5 2.5-3.5h3.5M11 17l.5 3 3.5-2.5V14"/>',
+   game:'<path class="f2" d="M7 8h10a4 4 0 0 1 4 4.4l-.5 3.2a2.4 2.4 0 0 1-4.1 1.3L14.5 15h-5l-1.9 1.9a2.4 2.4 0 0 1-4.1-1.3L3 12.4A4 4 0 0 1 7 8z"/><path d="M7.5 11v3M6 12.5h3"/><circle class="f" cx="15.5" cy="11.5" r="1.1"/><circle class="f" cx="17.5" cy="13.5" r="1.1"/>',
+   book:'<path class="f2" d="M3 5.5C5.5 4 8.5 4 12 6c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 6v13.5"/><path class="f" d="M15 8.5l1.2.8 1.3-.8v4l-1.3-.8-1.2.8z"/>',
+   spark:'<path class="f" d="M12 3l2 5.5L19.5 10.5 14 12.5 12 18l-2-5.5L4.5 10.5 10 8.5z"/><path d="M18.5 16l.6 1.5 1.5.6-1.5.6-.6 1.5-.6-1.5-1.5-.6 1.5-.6zM5.5 15.5l.5 1.2 1.2.5-1.2.5-.5 1.2-.5-1.2-1.2-.5 1.2-.5z"/>'
+  };
+  function pick(title,cls){
+   if(/أبطال|تعزيز|تحفيز|نقاط|مكافأ|مكافآ/.test(title))return'trophy';
+   if(/مبدع|سحري/.test(title))return'wand';
+   if(/نور/.test(title))return'lms';
+   if(/claude|ذكاء|اصطناع|\bai\b/i.test(title))return'ai';
+   if(/قناة|يوتيوب|فيديو/.test(title)||/k-chan/.test(cls))return'play';
+   if(/s-game/.test(cls))return'game';
+   if(/s-book/.test(cls))return'book';
+   if(/k-init|مبادرة/.test(cls+title))return'rocket';
+   if(/s-work|k-work|ورش|ورشة|تمكين|دليل/.test(cls+title))return'board';
+   if(/s-tool/.test(cls))return'toolbox';
+   return'spark';
+  }
+  function fix(root){(root.querySelectorAll?root:document).querySelectorAll('.sc-ico:not(.svg-ico),.ic-ico:not(.svg-ico)').forEach(i=>{const cov=i.closest('.cover');const card=i.closest('.card');const t=((cov&&cov.querySelector('b'))||(card&&card.querySelector('h3'))||{}).textContent||'';const k=pick(t,cov?cov.className:'');i.classList.add('svg-ico');i.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+S[k]+'</svg>';});}
+  fix(document);new MutationObserver(ms=>{for(const m of ms)if(m.addedNodes.length){fix(document);break;}}).observe(document.body,{childList:true,subtree:true});
+ })();
  window.atharFx={setTheme,setMotion:v=>{motion=!!v;applyMotion();syncUI();}};
 })();
 </script>
