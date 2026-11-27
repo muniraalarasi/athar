@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-<script>try{var t=localStorage.getItem("athar-tone");document.documentElement.dataset.tone=/^(iris|sky|night|royal)$/.test(t)?t:"iris";}catch(e){document.documentElement.dataset.tone="iris";}</script>
+<script>try{var t=localStorage.getItem("athar-tone");document.documentElement.dataset.tone=/^(iris|sky|coral|royal)$/.test(t)?t:"iris";}catch(e){document.documentElement.dataset.tone="iris";}</script>
 <style>
 /* بصمة أثر: لوحة معلم بهوية منصة أثر (أخضر مزرق + ذهبي)، البيانات على جهاز المعلم */
 :root{--ink:#16303b;--muted:#5a7380;--page:#eef3f4;--paper:#fff;--soft:#f3f7f8;--line:#dbe6e9;--teal:#163f52;--teal2:#225c78;--tsoft:#e4eff3;--gold:#d9a64e;--gsoft:#f8eed8;--good:#1f8a4c;--gdsoft:#e6f5ec;--bad:#b3261e;--bdsoft:#fdecea;--warn:#9a6200;--wsoft:#fdf3e1;--r:16px}
@@ -120,9 +120,9 @@ dialog::backdrop{background:rgba(10,30,40,.5)}
 
 /* ===== ألوان بصمة أثر تتبع مظهر منصة أثر ===== */
 :root[data-tone]{--teal:#163f52;--teal2:#225c78;--tsoft:#e4eff3;--gold:#d9a64e;--gsoft:#f8eed8;--deep:#0f2e3d;--gink:#3a2806;--gink2:#7a5410;--ink:#16303b;--muted:#5a7380;--page:#eef3f4;--soft:#f3f7f8;--line:#dbe6e9}
-:root[data-tone=sky]{--teal:#1d4f86;--teal2:#2f72b8;--tsoft:#e6effa;--gold:#f4b740;--gsoft:#fdeabb;--deep:#112f52;--gink:#3a2a00;--gink2:#8f6200;--ink:#14263d;--muted:#5a6b82;--page:#eef4fc;--soft:#f0f5fc;--line:#d8e3f1}
-:root[data-tone=royal]{--teal:#1f2731;--teal2:#2f3a48;--tsoft:#eaecef;--gold:#c9a45c;--gsoft:#f0e4c8;--deep:#14191f;--gink:#2e2210;--gink2:#86662a;--ink:#1e252e;--muted:#636c78;--page:#f4f3ef;--soft:#f3f2ee;--line:#e0ded7}
-:root[data-tone=night]{--teal:#14264a;--teal2:#1f3a68;--tsoft:#e6ecf8;--gold:#ef8a3c;--gsoft:#fde3cc;--deep:#0b1630;--gink:#3a1a04;--gink2:#9a4a10;--ink:#142039;--muted:#5a6683;--page:#eef2f9;--soft:#f1f4fa;--line:#d9e0ee}
+:root[data-tone=sky]{--teal:#123f7a;--teal2:#1f6fd1;--tsoft:#e2eeff;--gold:#f5b400;--gsoft:#ffeeb8;--deep:#0b2a55;--gink:#3a2a00;--gink2:#8a6200;--ink:#0f2442;--muted:#55698a;--page:#edf4ff;--soft:#eef4ff;--line:#d3e2f7}
+:root[data-tone=royal]{--teal:#1f2731;--teal2:#2f3a48;--tsoft:#ece6d8;--gold:#c9a45c;--gsoft:#efe3c6;--deep:#14191f;--gink:#2e2210;--gink2:#86662a;--ink:#1e252e;--muted:#635f58;--page:#f4efe4;--soft:#f3eee2;--line:#e0d8c5}
+:root[data-tone=coral]{--teal:#1d3557;--teal2:#c94f35;--tsoft:#fbe4dc;--gold:#f2b880;--gsoft:#fdeee2;--deep:#12233a;--gink:#3a1a0c;--gink2:#a0432d;--ink:#2a2030;--muted:#7a6468;--page:#fbf1ec;--soft:#fdf3ef;--line:#f0dcd3}
 .brand img{background:#fff}
 .theme-dots{display:flex;gap:7px;align-items:center;margin:0 0 10px}
 .theme-dots span{font-size:12.5px;opacity:.85;margin-inline-end:2px}
@@ -448,7 +448,7 @@ function todaySchedCard(){const x=SC(),N=nowInfo();if(N.di<0)return`<div class="
 new MutationObserver(()=>{if(V!=="home"||!D.classes.length)return;const W=$("#view");if(W.querySelector(".tsched"))return;W.insertAdjacentHTML("afterbegin",todaySchedCard());W.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(b.dataset.go))}).observe($("#view"),{childList:true});
 
 /* ===== مزامنة المظهر مع منصة أثر ===== */
-{const T=[["iris","الهوية","#225c78"],["sky","سماوي","#2f72b8"],["night","ليلي","#1f3a68"],["royal","ملكي","#2f3a48"]];const box=$("#themeDots");
+{const T=[["iris","الهوية","#225c78"],["sky","سماوي","#1f6fd1"],["coral","مرجاني","#c94f35"],["royal","ملكي","#2f3a48"]];const box=$("#themeDots");
  const sync=()=>{const cur=document.documentElement.dataset.tone;box.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===cur))};
  T.forEach(([k,n,c])=>{const b=document.createElement("button");b.type="button";b.dataset.t=k;b.title="المظهر: "+n;b.setAttribute("aria-label","المظهر: "+n);b.style.background=c;b.onclick=()=>{document.documentElement.dataset.tone=k;try{localStorage.setItem("athar-tone",k)}catch(e){}sync();render()};box.append(b)});
  addEventListener("storage",e=>{if(e.key==="athar-tone"&&e.newValue){document.documentElement.dataset.tone=e.newValue;sync();render()}});sync();}
