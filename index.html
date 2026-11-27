@@ -2919,6 +2919,25 @@ html[data-hero] .hero-art{display:block}
 html.fx-still .ha-a .orbit,html.fx-still .ha-a .emblem::before,html.fx-still .ha-a .emblem::after,html.fx-still .ha-a .sat,html.fx-still .atelier-hero.hero2 .ha-stars i{animation-play-state:paused!important}
 @media (prefers-reduced-motion: reduce){html:not(.fx-on) .ha-stars i{animation:none;opacity:.7}}
 
+/* ===== زر الإعدادات الموحّد (المظهر + الوضع + حجم الخط + الحركة) ===== */
+.me .disp{display:none!important}
+.fx-btn .fx-gear{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.fx-btn .fx-sw{width:12px;height:12px;box-shadow:0 0 0 1.5px var(--paper),0 0 0 2.5px var(--line)}
+.fx-pop{max-height:calc(100vh - 110px);overflow:auto}
+.fx-pop .fx-sec{display:block;font-size:13px;font-weight:800;color:var(--muted);margin:14px 4px 7px}
+.fx-pop .fx-title+.fx-sec{margin-top:2px}
+.fx-seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--soft);border:1px solid var(--line);border-radius:13px;padding:4px}
+.fx-seg button{min-height:40px;border:0;border-radius:10px;background:transparent;color:var(--ink);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.fx-seg button[aria-checked=true]{background:var(--paper);color:var(--tone);box-shadow:0 2px 8px -3px color-mix(in srgb,var(--c2) 45%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--tone) 35%,transparent)}
+.fx-zoom{display:flex;align-items:center;gap:6px}
+.fx-zoom button{min-width:44px;min-height:40px;border:1px solid var(--line);border-radius:11px;background:var(--soft);color:var(--ink);font:inherit;font-size:16px;font-weight:800;cursor:pointer}
+.fx-zoom button:hover:not(:disabled){border-color:var(--tone)}
+.fx-zoom button:disabled{opacity:.4;cursor:default}
+.fx-zoom output{min-width:62px;text-align:center;font-weight:800;color:var(--tone);font-size:16px}
+[data-mode=dark] .fx-motion[aria-checked=true] .sw{background:var(--tone)}
+.fx-zoom .fx-zr{margin-inline-start:auto;font-size:13.5px;font-weight:700;padding:0 12px}
+.fx-seg button:focus-visible,.fx-zoom button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
 /* الخلفية */
 html.fx-on{background:var(--page)!important}
 html.fx-on body{background:transparent!important}
@@ -3025,25 +3044,40 @@ html.fx-still .fx-btn .fx-paused{display:inline-block}
  /* زر المظهر ولوحته */
  const me=document.querySelector('.me');
  const btn=document.createElement('button');btn.type='button';btn.className='fx-btn';btn.setAttribute('aria-haspopup','dialog');btn.setAttribute('aria-expanded','false');
- btn.innerHTML='<span class="fx-sw" aria-hidden="true"></span><span class="t">المظهر</span><i class="fx-paused" aria-hidden="true"></i>';
- const pop=document.createElement('div');pop.className='fx-pop';pop.hidden=true;pop.setAttribute('role','dialog');pop.setAttribute('aria-label','مظهر المنصة');
- pop.innerHTML='<b class="fx-title">مظهر المنصة</b><div class="fx-opts" role="radiogroup" aria-label="اختر المظهر"></div><button type="button" class="fx-motion" role="switch"><span class="sw" aria-hidden="true"></span><span>حركة الخلفية</span><small></small></button>';
+ btn.innerHTML='<svg class="fx-gear" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1.1 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z"/></svg><span class="t">الإعدادات</span><span class="fx-sw" aria-hidden="true"></span><i class="fx-paused" aria-hidden="true"></i>';
+ const pop=document.createElement('div');pop.className='fx-pop';pop.hidden=true;pop.setAttribute('role','dialog');pop.setAttribute('aria-label','الإعدادات');
+ pop.innerHTML='<b class="fx-title">الإعدادات</b><span class="fx-sec">المظهر</span><div class="fx-opts" role="radiogroup" aria-label="اختر المظهر"></div>'+
+  '<span class="fx-sec">الوضع</span><div class="fx-seg" role="radiogroup" aria-label="وضع العرض"><button type="button" role="radio" data-m="light"><span aria-hidden="true">☀</span> نهاري</button><button type="button" role="radio" data-m="dark"><span aria-hidden="true">☾</span> ليلي</button></div>'+
+  '<span class="fx-sec">حجم الخط</span><div class="fx-zoom" role="group" aria-label="حجم الخط"><button type="button" data-z="-" aria-label="تصغير الخط">A−</button><output aria-live="polite">100٪</output><button type="button" data-z="+" aria-label="تكبير الخط">A+</button><button type="button" class="fx-zr" data-z="0">الافتراضي</button></div>'+
+  '<button type="button" class="fx-motion" role="switch"><span class="sw" aria-hidden="true"></span><span>حركة الخلفية</span><small></small></button>';
  const opts=pop.querySelector('.fx-opts'),mv=pop.querySelector('.fx-motion');
  THEMES.forEach(t=>{const b=document.createElement('button');b.type='button';b.className='fx-opt';b.setAttribute('role','radio');b.dataset.k=t.k;
   b.innerHTML='<span class="dots" aria-hidden="true">'+t.c.map(c=>'<i style="background:'+c+'"></i>').join('')+'</span><b>'+t.n+'</b><small>'+t.d+'</small>';
   b.addEventListener('click',()=>setTheme(t.k));opts.append(b);});
- function syncUI(){const t=THEMES.find(x=>x.k===theme);btn.setAttribute('aria-label','المظهر: '+t.n+(motion?'':' (الحركة متوقفة)'));btn.title='المظهر: '+t.n;
+ function syncUI(){const t=THEMES.find(x=>x.k===theme);btn.setAttribute('aria-label','الإعدادات: المظهر '+t.n+(motion?'':'، الحركة متوقفة'));btn.title='الإعدادات: المظهر، والوضع الليلي، وحجم الخط';
   opts.querySelectorAll('.fx-opt').forEach(b=>b.setAttribute('aria-checked',String(b.dataset.k===theme)));mv.setAttribute('aria-checked',String(motion));mv.querySelector('small').textContent=motion?'تعمل':'متوقفة';}
  function setTheme(k){theme=valid(k)?k:'iris';root.dataset.tone=theme;try{localStorage.setItem('athar-tone',theme);}catch(e){}syncUI();}
  mv.addEventListener('click',()=>{motion=!motion;try{localStorage.setItem('athar-motion',motion?'on':'off');}catch(e){}applyMotion();syncUI();});
  function place(){const r=btn.getBoundingClientRect(),w=pop.offsetWidth;let left=r.left;if(left+w>innerWidth-12)left=innerWidth-12-w;pop.style.left=Math.max(12,left)+'px';pop.style.top=(r.bottom+8)+'px';}
  function open(o){pop.hidden=!o;btn.setAttribute('aria-expanded',String(o));if(o){place();(pop.querySelector('[aria-checked=true]')||mv).focus();}}
  btn.addEventListener('click',e=>{e.stopPropagation();open(pop.hidden);});
- document.addEventListener('click',e=>{if(!pop.hidden&&!pop.contains(e.target))open(false);});
+ document.addEventListener('click',e=>{if(e.isTrusted&&!pop.hidden&&!pop.contains(e.target)&&!btn.contains(e.target))open(false);});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!pop.hidden){open(false);btn.focus();}});
  addEventListener('scroll',()=>{if(!pop.hidden)place();},{passive:true});
  document.querySelector('.tone-picker')?.remove();
  if(me)me.prepend(btn);document.body.append(pop);
+
+ /* الوضع وحجم الخط داخل الإعدادات (تستخدم الأزرار الأصلية المخفية حتى يبقى منطقها كما هو) */
+ const seg=pop.querySelector('.fx-seg'),zw=pop.querySelector('.fx-zoom'),zout=zw.querySelector('output');
+ const zoomNow=()=>parseFloat(getComputedStyle(root).getPropertyValue('--zoom'))||1;
+ function syncSet(){const dark=root.dataset.mode==='dark';seg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-checked',String((b.dataset.m==='dark')===dark)));
+  const z=zoomNow();zout.textContent=Math.round(z*100).toLocaleString('ar-EG')+'٪';zw.querySelector('[data-z="-"]').disabled=z<=.85+1e-6;zw.querySelector('[data-z="+"]').disabled=z>=1.3-1e-6;zw.querySelector('[data-z="0"]').disabled=Math.abs(z-1)<1e-6;}
+ seg.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const want=b.dataset.m==='dark';if(want!==(root.dataset.mode==='dark'))document.getElementById('modeBtn')?.click();syncSet();});
+ zw.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;const k=b.dataset.z;
+  if(k==='0'){root.style.setProperty('--zoom','1');try{localStorage.setItem('athar-zoom','1');}catch(x){}}
+  else document.querySelector('.disp [data-fs="'+k+'"]')?.click();syncSet();});
+ new MutationObserver(syncSet).observe(root,{attributes:true,attributeFilter:['data-mode','style']});
+ syncSet();
  /* إطار الشعار المتحرك */
  document.querySelectorAll('.brand .logo, img.glogo').forEach(img=>{if(img.parentElement.classList.contains('logo-ring'))return;const r=document.createElement('span');r.className='logo-ring'+(img.classList.contains('glogo')?' gate-ring':'');img.before(r);r.append(img);const o=document.createElement('i');o.className='orb';o.setAttribute('aria-hidden','true');r.append(o);});
  syncUI();applyMotion();
