@@ -161,6 +161,19 @@ table.sched td.now-cell{box-shadow:inset 0 0 0 3px var(--gold)}
 .times-grid{display:grid;grid-template-columns:auto 1fr 1fr;gap:8px 10px;align-items:center}
 .times-grid input{min-height:40px;border:1px solid var(--line);border-radius:10px;padding:0 8px}
 @media print{aside,.top,.sched-tools,.toast{display:none!important}.app{display:block}main{padding:0}table.sched{min-width:0}.slot{border:0}.sched-wrap{border:0}}
+
+/* ===== حماية البيانات: تذكير النسخ الاحتياطي والنسخ التلقائية ===== */
+.backup-nudge{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;border:1px solid color-mix(in srgb,var(--gold) 55%,var(--line));background:linear-gradient(135deg,var(--gsoft),var(--paper))}
+.backup-nudge .bn-ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--gold);color:var(--gink);flex:none;font-size:22px}
+.backup-nudge .grow{flex:1;min-width:220px}
+.backup-nudge b{display:block;font-size:17px}
+.snaps{display:grid;gap:8px;margin-top:6px}
+.snap-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}
+.snap-row .grow{flex:1}
+.snap-row small{color:var(--muted)}
+.side-backup{font-size:12.5px;opacity:.85;margin:6px 0 0;display:flex;gap:6px;align-items:center}
+.side-backup i{width:8px;height:8px;border-radius:50%;background:#7ad19b;flex:none}
+.side-backup.old i{background:var(--gold)}
 </style>
 </head>
 <body>
@@ -259,7 +272,7 @@ const lvTag=l=>`<span class="lv" style="background:${l.c}1f;color:${l.c}">${ic(l
 const REASONS=[{t:"مشاركة",v:1,i:"msg"},{t:"تعاون",v:1,i:"users"},{t:"إبداع",v:2,i:"bulb"},{t:"إتقان المهمة",v:2,i:"award"},{t:"انضباط",v:1,i:"target"},{t:"سلوك يحتاج تحسين",v:-1,i:"alert"}];
 let D;
 function load(){try{D=JSON.parse(localStorage.getItem(KEY))}catch(e){D=null}D=D||{};D.classes=D.classes||[];D.students=D.students||[];D.att=D.att||{};D.points=D.points||[];D.cur=D.cur||(D.classes[0]&&D.classes[0].id)||"";}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){toast("تعذّر الحفظ على هذا الجهاز")}}
+function save(){D.meta=D.meta||{};if(!D.meta.dirtySince)D.meta.dirtySince=Date.now();try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){toast("تعذّر الحفظ على هذا الجهاز")}snapLater()}
 const $=s=>document.querySelector(s);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -353,12 +366,14 @@ function render(){
     W.innerHTML=`<div class="card" style="margin-bottom:14px"><h2><span style="display:flex;gap:8px;align-items:center">${ic("path")}مراحل مسار الإنجاز: من مستكشف رقمي إلى صانع الأثر</span></h2><div class="path">${LEVELS.map(l=>`<div class="step"><div class="e" style="background:linear-gradient(135deg,${l.c},${l.c}cc)">${ic(l.i)}</div><b>${l.n}</b><small>من ${l.min} نقطة</small></div>`).join("")}</div></div>`+(!c?needClass():L.length?`<div class="card">${L.map(s=>{const p=ptsOf(s.id),lv=levelOf(p),nx=nextLevel(p);const pc=nx?Math.round((p-lv.min)/(nx.min-lv.min)*100):100;return `<div class="row"><span class="av" style="background:${lv.c}1f;color:${lv.c}">${ic(lv.i)}</span><span class="grow"><b>${esc(s.name)}</b> ${lvTag(lv)}<div class="prog" style="margin-top:6px"><span style="width:${Math.max(0,Math.min(100,pc))}%"></span></div><span class="sm muted">${nx?`باقي ${nx.min-p} نقطة للوصول إلى مرحلة «${nx.n}»`:"وصل إلى أعلى مرحلة: صانع الأثر"}</span></span><span class="pill gold">${p}</span></div>`}).join("")}</div>`:'<div class="card empty"><b>أضيفي الطلاب أولًا</b></div>');
   }
   else if(V==="settings"){
-    W.innerHTML=`<div class="grid two"><div class="card"><h2><span style="display:flex;gap:8px;align-items:center">${ic("down")}حفظ نسخة احتياطية</span></h2><p class="muted sm">بياناتكِ محفوظة في هذا المتصفح فقط. نزّلي نسخة احتياطية بين حين وآخر، أو لنقل بياناتكِ إلى جهاز آخر.</p><button class="btn pri" type="button" id="exp">${ic("down")}تنزيل النسخة</button></div>
+    W.innerHTML=`<div class="grid two"><div class="card"><h2><span style="display:flex;gap:8px;align-items:center">${ic("down")}حفظ نسخة احتياطية</span></h2><p class="muted sm">بياناتكِ محفوظة في هذا المتصفح فقط. نزّلي نسخة احتياطية بين حين وآخر، أو لنقل بياناتكِ إلى جهاز آخر.</p><p class="sm" style="margin:0 0 10px"><b>آخر نسخة منزّلة:</b> ${lastExportTxt()}</p><button class="btn pri" type="button" id="exp">${ic("down")}تنزيل النسخة</button></div>
       <div class="card"><h2><span style="display:flex;gap:8px;align-items:center">${ic("up")}استرجاع نسخة</span></h2><p class="muted sm">اختاري ملف النسخة الاحتياطية (.json). سيحلّ محل البيانات الحالية.</p><input type="file" id="imp" accept=".json,application/json"></div>
+      <div class="card snaps-card" style="grid-column:1/-1"><h2><span style="display:flex;gap:8px;align-items:center">${ic("clock")}نسخ تلقائية على هذا الجهاز</span></h2><p class="muted sm">تحفظ «بصمة أثر» نسخة تلقائية كل يوم تعملين فيه (آخر ٧ أيام)، وقبل أي استرجاع أو مسح. استرجعي منها إذا حذفتِ شيئًا بالخطأ.</p>${snapsList()}</div>
       <div class="card"><h2><span style="display:flex;gap:8px;align-items:center">${ic("trash")}مسح كل البيانات</span></h2><p class="muted sm">يحذف الصفوف والطلاب والحضور والنقاط من هذا الجهاز.</p><button class="btn bad" type="button" id="wipe">مسح البيانات</button></div></div>`;
-    $("#exp").onclick=()=>{const b=new Blob([JSON.stringify(D,null,1)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="basma-athar-"+todayISO()+".json";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
-    $("#imp").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x||!Array.isArray(x.classes)||!Array.isArray(x.students))throw 0;localStorage.setItem(KEY,JSON.stringify(x));load();render();toast("تم استرجاع النسخة")}catch(err){toast("الملف غير صالح")}};r.readAsText(f)};
-    $("#wipe").onclick=e=>{const b=e.target;if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent="اضغطي مرة أخرى للتأكيد";setTimeout(()=>{b.dataset.armed="";b.textContent="مسح البيانات"},3500);return}try{localStorage.removeItem(KEY)}catch(err){}load();render();toast("مُسحت البيانات")};
+    $("#exp").onclick=()=>{markExported();const b=new Blob([JSON.stringify(D,null,1)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="basma-athar-"+todayISO()+".json";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
+    $("#imp").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x||!Array.isArray(x.classes)||!Array.isArray(x.students))throw 0;takeSnap("قبل استرجاع ملف",true);localStorage.setItem(KEY,JSON.stringify(x));load();render();toast("تم استرجاع النسخة")}catch(err){toast("الملف غير صالح")}};r.readAsText(f)};
+    W.querySelectorAll("[data-snap]").forEach(b=>b.onclick=()=>{if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent="اضغطي مرة أخرى للتأكيد";setTimeout(()=>{b.dataset.armed="";b.textContent="استرجاع"},3500);return}restoreSnap(+b.dataset.snap)});
+    $("#wipe").onclick=e=>{const b=e.target;if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent="اضغطي مرة أخرى للتأكيد";setTimeout(()=>{b.dataset.armed="";b.textContent="مسح البيانات"},3500);return}takeSnap("قبل مسح البيانات",true);try{localStorage.removeItem(KEY)}catch(err){}load();render();toast("مُسحت البيانات · يمكن استرجاعها من «نسخ تلقائية»")};
   }
   W.querySelectorAll("[data-act=addClass]").forEach(b=>b.onclick=addClass);
   W.querySelectorAll("[data-act=addStudents]").forEach(b=>b.onclick=addStudents);
@@ -438,7 +453,35 @@ new MutationObserver(()=>{if(V!=="home"||!D.classes.length)return;const W=$("#vi
  T.forEach(([k,n,c])=>{const b=document.createElement("button");b.type="button";b.dataset.t=k;b.title="المظهر: "+n;b.setAttribute("aria-label","المظهر: "+n);b.style.background=c;b.onclick=()=>{document.documentElement.dataset.tone=k;try{localStorage.setItem("athar-tone",k)}catch(e){}sync();render()};box.append(b)});
  addEventListener("storage",e=>{if(e.key==="athar-tone"&&e.newValue){document.documentElement.dataset.tone=e.newValue;sync();render()}});sync();}
 
-load();
+/* ===== حماية البيانات ===== */
+const SNAPKEY="basma-athar-snaps";
+const fmtDay=t=>new Date(t).toLocaleDateString("ar-OM",{weekday:"long",day:"numeric",month:"long"});
+const fmtTime=t=>new Date(t).toLocaleTimeString("ar-OM",{hour:"numeric",minute:"2-digit"});
+function getSnaps(){try{return JSON.parse(localStorage.getItem(SNAPKEY))||[]}catch(e){return[]}}
+function putSnaps(a){while(a.length){try{localStorage.setItem(SNAPKEY,JSON.stringify(a));return true}catch(e){a.shift()}}try{localStorage.removeItem(SNAPKEY)}catch(e){}return false}
+function hasData(x){return x&&((x.classes||[]).length||(x.students||[]).length)}
+function takeSnap(label,force){if(!hasData(D))return;const a=getSnaps();const day=todayISO();const data=JSON.stringify(D);
+  if(!force){const i=a.findIndex(x=>x.day===day&&!x.label);if(i>=0){a[i]={day,t:Date.now(),data};putSnaps(a);return}}
+  a.push({day,t:Date.now(),label:label||"",data});
+  const days=[...new Set(a.map(x=>x.day))].sort();while(days.length>7){const old=days.shift();for(let i=a.length-1;i>=0;i--)if(a[i].day===old)a.splice(i,1)}
+  while(a.length>12)a.shift();putSnaps(a)}
+let _snapT=0;function snapLater(){clearTimeout(_snapT);_snapT=setTimeout(()=>takeSnap(),1500)}
+function snapsList(){const a=getSnaps().slice().reverse();if(!a.length)return'<p class="muted sm" style="margin:0">لا توجد نسخ تلقائية بعد. ستظهر هنا بعد أول تعديل.</p>';
+  return'<div class="snaps">'+a.map((x,i)=>{let n={};try{n=JSON.parse(x.data)}catch(e){}const idx=a.length-1-i;
+    return`<div class="snap-row"><span class="grow"><b>${esc(fmtDay(x.t))}</b> <small>· ${esc(fmtTime(x.t))}${x.label?" · "+esc(x.label):""}</small><br><small>${(n.classes||[]).length} صف · ${(n.students||[]).length} طالب · ${(n.points||[]).length} نقطة</small></span><button class="btn s" type="button" data-snap="${idx}">استرجاع</button></div>`}).join("")+'</div>'}
+function restoreSnap(i){const a=getSnaps();const x=a[i];if(!x)return;takeSnap("قبل استرجاع نسخة تلقائية",true);try{localStorage.setItem(KEY,x.data)}catch(e){toast("تعذّر الاسترجاع");return}load();render();toast("تم الاسترجاع إلى نسخة "+fmtDay(x.t))}
+function markExported(){D.meta=D.meta||{};D.meta.lastExport=Date.now();D.meta.dirtySince=0;try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}setTimeout(sideBackup,50)}
+function daysSince(t){return t?Math.floor((Date.now()-t)/864e5):Infinity}
+function lastExportTxt(){const t=D.meta&&D.meta.lastExport;if(!t)return"لم تُنزَّل نسخة بعد";const d=daysSince(t);return d===0?"اليوم":d===1?"أمس":"قبل "+d+" أيام"}
+function needNudge(){if(!hasData(D))return false;const m=D.meta||{};if(m.snoozeUntil&&Date.now()<m.snoozeUntil)return false;if(!m.lastExport)return true;return daysSince(m.lastExport)>=7&&!!m.dirtySince}
+function nudgeCard(){const m=D.meta||{};return`<div class="card backup-nudge" role="status"><span class="bn-ic" aria-hidden="true">🛡️</span><span class="grow"><b>احمي بيانات صفوفكِ</b><span class="muted sm">${m.lastExport?"آخر نسخة احتياطية منزّلة "+lastExportTxt()+"، وفيها تعديلات جديدة لم تُحفظ.":"لم تنزّلي نسخة احتياطية بعد. البيانات محفوظة في هذا المتصفح فقط، وقد تضيع إذا مُسح أو تغيّر الجهاز."}</span></span><button class="btn gold" type="button" data-bk="now">${ic("down")}تنزيل نسخة الآن</button><button class="btn s" type="button" data-bk="later">ذكّريني بعد ٣ أيام</button></div>`}
+function sideBackup(){const f=document.querySelector(".side-foot");if(!f)return;let el=f.querySelector(".side-backup");if(!el){el=document.createElement("p");el.className="side-backup";f.append(el)}const old=!D.meta||!D.meta.lastExport||daysSince(D.meta.lastExport)>=7;el.classList.toggle("old",old);el.innerHTML='<i aria-hidden="true"></i>آخر نسخة احتياطية: '+esc(lastExportTxt())}
+new MutationObserver(()=>{if(V!=="home")return;const W=$("#view");if(W.querySelector(".backup-nudge")||!needNudge())return;W.insertAdjacentHTML("afterbegin",nudgeCard());
+  W.querySelector('[data-bk=now]').onclick=()=>{go("settings");setTimeout(()=>$("#exp")&&$("#exp").click(),60)};
+  W.querySelector('[data-bk=later]').onclick=()=>{D.meta=D.meta||{};D.meta.snoozeUntil=Date.now()+3*864e5;try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}W.querySelector(".backup-nudge")?.remove()}}).observe($("#view"),{childList:true});
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+
+load();sideBackup&&setTimeout(sideBackup,0);
 $("#today").textContent=new Date().toLocaleDateString("ar-OM",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 const h=(location.hash||"").slice(1);go(TITLES[h]?h:"home");
 }
