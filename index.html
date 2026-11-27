@@ -920,6 +920,7 @@ nav.tabs>a.basma-link{font-weight:700}
   <!-- HOME -->
   <section class="view" id="v-home">
     <div class="greet atelier-greeting" id="greet" aria-live="polite"></div>
+
     <div class="card hero-main hero2 atelier-hero">
       <div class="hero-copy">
         <span class="hero-kicker"><span aria-hidden="true">✧</span> مساحة تجمعنا، وأثر يبقى</span>
@@ -937,6 +938,7 @@ nav.tabs>a.basma-link{font-weight:700}
         <div class="collage-pill"><i></i> مجتمع الممارسة المهني</div>
       </div>
     </div>
+
     <section class="pathways" aria-label="اكتشف مسارات أثر">
       <a href="#practices" class="pathway path-iris"><span class="icon3d icon-code" aria-hidden="true"></span><div><h3>تجارب الميدان</h3><p>خبرات تستحق أن نشاركها</p></div></a>
       <a href="#tools" class="pathway path-sky"><span class="icon3d icon-digitaltools" aria-hidden="true"></span><div><h3>أدوات وموارد</h3><p>كل ما يُثري حصتك</p></div></a>
@@ -948,6 +950,18 @@ nav.tabs>a.basma-link{font-weight:700}
       <div class="sec-h"><div><span class="section-kicker">من هنا تبدأ رحلتك</span><h2>اختر صفّك. واكتشف أفكارًا جديدة.</h2><p id="homeSemTxt">خطة الفصل الدراسي الأول 2026/2027 ودروسها وتجاربها</p></div><div id="homeSem"></div></div>
       <div class="grade-filters" role="group" aria-label="تصفية الصفوف حسب المرحلة"><button type="button" data-stage-filter="all" aria-pressed="true">جميع الصفوف</button><button type="button" data-stage-filter="first" aria-pressed="false">الحلقة الأولى · ١–٤</button><button type="button" data-stage-filter="second" aria-pressed="false">الحلقة الثانية · ٥–١٠</button><button type="button" data-stage-filter="post" aria-pressed="false">ما بعد الأساسي · ١١–١٢</button></div><div class="grades" id="gradeTiles"></div>
       <div class="bandkey"><span><i style="background:#0e7c78"></i>الحلقة الأولى (1–4)</span><span><i style="background:#225c78"></i>الحلقة الثانية (5–10)</span><span><i style="background:#c07a12"></i>ما بعد الأساسي (11–12)</span></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-h"><div><span class="section-kicker">لحصة أكثر تفاعلًا</span><h2>حقيبتك التعليمية</h2><p>أدوات للموقف الصفي، وورش وأدلة، وإبداعات الزملاء</p></div><a class="btn s" href="#tools">عرض الموارد</a></div>
+      <div class="seg" role="tablist" aria-label="نوع المورد">
+        <button type="button" role="tab" aria-selected="true" data-pane="paneTools"><svg class="fp-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6M12 11v2a14 14 0 0 0 2.5 8M8 15a18 18 0 0 0 1.8 6M4.9 19a22 22 0 0 1-.9-7v-1a8 8 0 0 1 12-6.95"/></svg> بصمة أثر</button>
+        <button type="button" role="tab" aria-selected="false" data-pane="paneWork">🎓 ورش وأدلة</button>
+        <button type="button" role="tab" aria-selected="false" data-pane="paneShow">✨ إبداعات من الميدان</button>
+      </div>
+      <div class="pane" id="paneTools"><a class="card basma-promo" href="basma.html"><span class="bp-ico" aria-hidden="true"><svg class="fp-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6M12 11v2a14 14 0 0 0 2.5 8M8 15a18 18 0 0 0 1.8 6M4.9 19a22 22 0 0 1-.9-7v-1a8 8 0 0 1 12-6.95"/></svg></span><span class="bp-txt"><b>بصمة أثر · لوحة المعلم</b><span>أدِر/ي صفوفك داخل الحصة: الطلاب والحضور، ونقاط التحفيز ومسار الإنجاز، والقرعة والمجموعات والمؤقت. البيانات تُحفظ على جهازك.</span><span class="bp-tags"><i>الصفوف والطلاب</i><i>الحضور</i><i>نقاط التحفيز</i><i>مسار الإنجاز</i><i>القرعة</i><i>المجموعات</i><i>المؤقت</i></span></span><span class="btn pri">افتح/ي بصمة أثر ←</span></a><div class="tools" id="homeTools" hidden></div></div>
+      <div class="pane" id="paneWork" hidden><div class="inits" id="homeWorkshops"></div></div>
+      <div class="pane" id="paneShow" hidden><div class="actions owner-only" style="margin:0 0 10px"><button class="btn s" type="button" data-act="new-show">+ إضافة منصة أو مورد</button></div><div class="inits" id="homeShow"></div></div>
     </div>
 
     <div class="sec">
@@ -972,15 +986,13 @@ nav.tabs>a.basma-link{font-weight:700}
     </div>
 
     <div class="sec">
-      <div class="sec-h"><div><span class="section-kicker">لحصة أكثر تفاعلًا</span><h2>حقيبتك التعليمية</h2><p>أدوات للموقف الصفي، وورش وأدلة، وإبداعات الزملاء</p></div><a class="btn s" href="#tools">عرض الموارد</a></div>
-      <div class="seg" role="tablist" aria-label="نوع المورد">
-        <button type="button" role="tab" aria-selected="true" data-pane="paneTools"><svg class="fp-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6M12 11v2a14 14 0 0 0 2.5 8M8 15a18 18 0 0 0 1.8 6M4.9 19a22 22 0 0 1-.9-7v-1a8 8 0 0 1 12-6.95"/></svg> بصمة أثر</button>
-        <button type="button" role="tab" aria-selected="false" data-pane="paneWork">🎓 ورش وأدلة</button>
-        <button type="button" role="tab" aria-selected="false" data-pane="paneShow">✨ إبداعات من الميدان</button>
+      <div class="sec-h"><div><h2>تفاعل معنا</h2><p>صوّت/ي في سؤال الأسبوع، وتعرّف/ي على أكثر الزملاء والزميلات عطاءً، وتابع/ي ما يحدث الآن في المنصة</p></div></div>
+      <div class="inter">
+        <div class="card poll" id="pollBox"></div>
+        <div class="card lb" id="lbBox"></div>
       </div>
-      <div class="pane" id="paneTools"><a class="card basma-promo" href="basma.html"><span class="bp-ico" aria-hidden="true"><svg class="fp-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6M12 11v2a14 14 0 0 0 2.5 8M8 15a18 18 0 0 0 1.8 6M4.9 19a22 22 0 0 1-.9-7v-1a8 8 0 0 1 12-6.95"/></svg></span><span class="bp-txt"><b>بصمة أثر · لوحة المعلم</b><span>أدِر/ي صفوفك داخل الحصة: الطلاب والحضور، ونقاط التحفيز ومسار الإنجاز، والقرعة والمجموعات والمؤقت. البيانات تُحفظ على جهازك.</span><span class="bp-tags"><i>الصفوف والطلاب</i><i>الحضور</i><i>نقاط التحفيز</i><i>مسار الإنجاز</i><i>القرعة</i><i>المجموعات</i><i>المؤقت</i></span></span><span class="btn pri">افتح/ي بصمة أثر ←</span></a><div class="tools" id="homeTools" hidden></div></div>
-      <div class="pane" id="paneWork" hidden><div class="inits" id="homeWorkshops"></div></div>
-      <div class="pane" id="paneShow" hidden><div class="actions owner-only" style="margin:0 0 10px"><button class="btn s" type="button" data-act="new-show">+ إضافة منصة أو مورد</button></div><div class="inits" id="homeShow"></div></div>
+      <h3 class="mini-h" style="margin-top:18px">يحدث الآن في المنصة</h3>
+      <div class="feed" id="feed"></div>
     </div>
 
     <div class="kpis kstrip" style="margin-top:34px">
@@ -989,16 +1001,6 @@ nav.tabs>a.basma-link{font-weight:700}
       <div class="card kpi"><span class="v num" id="k-rooms">0</span><span class="l">نقاشًا حول الدروس</span></div>
       <div class="card kpi"><span class="v num" id="k-schools">0</span><span class="l">مدرسة مشاركة</span></div>
       <div class="card kpi"><span class="v num" id="k-visitors">0</span><span class="l">زائرًا للمنصة</span></div>
-    </div>
-
-    <div class="sec">
-      <div class="sec-h"><div><h2>تفاعل معنا</h2><p>صوّت/ي في سؤال الأسبوع، وتعرّف/ي على أكثر الزملاء والزميلات عطاءً، وتابع/ي ما يحدث الآن في المنصة</p></div></div>
-      <div class="inter">
-        <div class="card poll" id="pollBox"></div>
-        <div class="card lb" id="lbBox"></div>
-      </div>
-      <h3 class="mini-h" style="margin-top:18px">يحدث الآن في المنصة</h3>
-      <div class="feed" id="feed"></div>
     </div>
 
     <div class="sec" id="importantLinks" style="margin-bottom:28px">
@@ -2937,6 +2939,11 @@ html.fx-still .ha-a .orbit,html.fx-still .ha-a .emblem::before,html.fx-still .ha
 [data-mode=dark] .fx-motion[aria-checked=true] .sw{background:var(--tone)}
 .fx-zoom .fx-zr{margin-inline-start:auto;font-size:13.5px;font-weight:700;padding:0 12px}
 .fx-seg button:focus-visible,.fx-zoom button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* ===== ترتيب الصفحة الرئيسية واختصارها ===== */
+#v-home>.pathways{display:none!important}            /* المحاور الأربعة صارت أزرارًا حول الشعار في الواجهة */
+#homeShow>.card:nth-child(n+5),#homeWorkshops>.card:nth-child(n+5){display:none!important}
+#v-home>.kstrip{margin-top:30px!important;margin-bottom:30px}
 
 /* الخلفية */
 html.fx-on{background:var(--page)!important}
