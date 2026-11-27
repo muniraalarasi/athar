@@ -27,7 +27,7 @@ aside nav{display:flex;flex-direction:column;gap:3px}
 aside nav button{display:flex;align-items:center;gap:10px;background:none;border:0;color:#e8f1f4;text-align:start;padding:10px 12px;border-radius:12px;cursor:pointer;font-weight:600;min-height:44px}
 aside nav button:hover{background:rgba(255,255,255,.08)}
 aside nav button[aria-current=page]{background:var(--gold);color:#3a2806}
-aside nav i{font-style:normal;width:24px;text-align:center}
+aside nav .ic{opacity:.95}
 .side-foot{margin-top:auto;font-size:13px;opacity:.85}
 .side-foot a{color:#fff}
 main{padding:22px 26px 60px}
@@ -74,7 +74,7 @@ textarea{min-height:120px;width:100%;resize:vertical}
 .bars span{display:block;width:100%;background:linear-gradient(180deg,var(--gold),var(--teal2));border-radius:8px 8px 3px 3px;min-height:3px}
 .path{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
 .step{text-align:center;padding:14px 8px;border-radius:14px;background:var(--soft);border:1px solid var(--line)}
-.step .e{font-size:30px}.step b{display:block}.step small{color:var(--muted)}
+.step .e{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;margin:0 auto 6px;color:#fff}.step .e .ic{width:30px;height:30px}.step b{display:block}.step small{color:var(--muted)}
 .prog{height:10px;border-radius:6px;background:var(--tsoft);overflow:hidden}.prog span{display:block;height:100%;background:linear-gradient(90deg,var(--teal2),var(--gold))}
 dialog{border:0;border-radius:20px;padding:0;max-width:520px;width:calc(100% - 28px);box-shadow:0 20px 60px rgba(0,0,0,.25)}
 dialog::backdrop{background:rgba(10,30,40,.5)}
@@ -85,6 +85,16 @@ dialog::backdrop{background:rgba(10,30,40,.5)}
 .x{border:0;background:var(--soft);width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:20px}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:12px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:90}
 .toast.show{opacity:1}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:middle}
+.ic.lg{width:26px;height:26px}.ic.xl{width:40px;height:40px;stroke-width:1.6}
+.rank{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;flex:none}
+.rank.r1{background:linear-gradient(135deg,#e6b85c,#b8862b)}.rank.r2{background:linear-gradient(135deg,#b9c4cc,#8796a1)}.rank.r3{background:linear-gradient(135deg,#d39a6a,#a5673b)}.rank.r4,.rank.r5{background:var(--tsoft);color:var(--teal)}
+.card h2 .ic{color:var(--teal2)}
+.side-sep{font-size:12px;opacity:.7;padding:10px 12px 2px;font-weight:700}
+.rbtn{width:38px;height:36px;padding:0;justify-content:center}
+.lv{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.lv .ic{width:15px;height:15px}
+.rpill{display:inline-flex;align-items:center;gap:5px}.rpill .ic{width:15px;height:15px}
 /* وضع الحصة */
 #cm{position:fixed;inset:0;z-index:80;background:linear-gradient(160deg,#0f2e3d,#163f52 60%,#225c78);color:#fff;display:none;flex-direction:column;padding:18px 24px;overflow:auto}
 #cm.on{display:flex}
@@ -109,17 +119,57 @@ dialog::backdrop{background:rgba(10,30,40,.5)}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M5 12H3l9-9 9 9h-2M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7M9 21v-6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6"/></symbol>
+<symbol id="i-school" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-5h6v5M10 9h4M10 12.5h4"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2M16 3.13a4 4 0 0 1 0 7.75M21 21v-2a4 4 0 0 0-3-3.85"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 17.75l-6.17 3.25 1.18-6.88-5-4.87 6.9-1L12 2l3.09 6.25 6.9 1-5 4.87 1.18 6.88z"/></symbol>
+<symbol id="i-path" viewBox="0 0 24 24"><path d="M3 21h4v-4h4v-4h4V9h4V5h2"/><circle cx="20" cy="4" r="1.2"/></symbol>
+<symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6a8 3 0 0 0 16 0V6M4 12v6a8 3 0 0 0 16 0v-6"/></symbol>
+<symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M18 4l3 3-3 3M18 20l3-3-3-3M3 7h3a5 5 0 0 1 5 5 5 5 0 0 0 5 5h5M21 7h-5a5 5 0 0 0-3 1M9 16a5 5 0 0 1-3 1H3"/></symbol>
+<symbol id="i-groups" viewBox="0 0 24 24"><circle cx="12" cy="7" r="2.6"/><circle cx="5" cy="9.5" r="2"/><circle cx="19" cy="9.5" r="2"/><path d="M8 20v-1.5a4 4 0 0 1 8 0V20M2 20v-1a3 3 0 0 1 4.2-2.7M22 20v-1a3 3 0 0 0-4.2-2.7"/></symbol>
+<symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M10 2h4M19 6l1.5-1.5"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></symbol>
+<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v7a5 5 0 0 1-10 0zM7 6H5a2 2 0 0 0 0 4h2M17 6h2a2 2 0 0 1 0 4h-2"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M10 5a2 2 0 1 1 4 0 7 7 0 0 1 4 6v3a4 4 0 0 0 2 3H4a4 4 0 0 0 2-3v-3a7 7 0 0 1 4-6M9 17v1a3 3 0 0 0 6 0v-1"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 16v-3M12 16V8M17 16v-6"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2M7 11l5 5 5-5M12 4v12"/></symbol>
+<symbol id="i-up" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2M7 9l5-5 5 5M12 4v12"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></symbol>
+<symbol id="i-msg" viewBox="0 0 24 24"><path d="M3 20l1.3-3.9A9 8 0 1 1 7.7 19L3 20M8 10h8M8 13.5h5"/></symbol>
+<symbol id="i-bulb" viewBox="0 0 24 24"><path d="M3 12h1M12 3v1M20 12h1M5.6 5.6l.7.7M18.4 5.6l-.7.7M9 16a5 5 0 1 1 6 0 3.5 3.5 0 0 0-1 3 2 2 0 0 1-4 0 3.5 3.5 0 0 0-1-3M9.7 17h4.6"/></symbol>
+<symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M9 14.2L8 21l4-2 4 2-1-6.8"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 9v4M12 16h.01M10.36 3.6L2.26 17.1A1.9 1.9 0 0 0 3.9 20h16.2a1.9 1.9 0 0 0 1.64-2.9L13.64 3.6a1.9 1.9 0 0 0-3.28 0z"/></symbol>
+<symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 16l2-6 6-2-2 6z"/></symbol>
+<symbol id="i-code" viewBox="0 0 24 24"><path d="M7 8l-4 4 4 4M17 8l4 4-4 4M14 4l-4 16"/></symbol>
+<symbol id="i-cpu" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M3 10h2M3 14h2M10 3v2M14 3v2M21 10h-2M21 14h-2M14 21v-2M10 21v-2"/></symbol>
+<symbol id="i-rocket" viewBox="0 0 24 24"><path d="M4 13a8 8 0 0 1 7 7 6 6 0 0 0 3-5 9 9 0 0 0 6-8 3 3 0 0 0-3-3 9 9 0 0 0-8 6 6 6 0 0 0-5 3M7 14a6 6 0 0 0-3 6 6 6 0 0 0 6-3"/><circle cx="15" cy="9" r="1"/></symbol>
+<symbol id="i-crown" viewBox="0 0 24 24"><path d="M12 6l4 6 5-4-2 10H5L3 8l5 4z"/></symbol>
+<symbol id="i-finger" viewBox="0 0 24 24"><path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6M12 11v2a14 14 0 0 0 2.5 8M8 15a18 18 0 0 0 1.8 6M4.9 19a22 22 0 0 1-.9-7v-1a8 8 0 0 1 12-6.95"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L18.5 9.5a2.83 2.83 0 1 0-4-4L4 16v4M13.5 6.5l4 4"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+</defs></svg>
+
 <div class="app">
   <aside>
     <div class="brand"><img src="img/logo-180.png" alt="شعار منصة أثر"><div><b>بصمة أثر</b><small>لوحة المعلم · منصة أثر</small></div></div>
     <nav id="nav" aria-label="أقسام بصمة أثر">
-      <button type="button" data-v="home"><i>🏠</i>نظرة عامة</button>
-      <button type="button" data-v="classes"><i>🏫</i>الصفوف</button>
-      <button type="button" data-v="students"><i>👩‍🎓</i>الطلاب</button>
-      <button type="button" data-v="att"><i>✅</i>الحضور</button>
-      <button type="button" data-v="points"><i>⭐</i>النقاط</button>
-      <button type="button" data-v="path"><i>🌱</i>مسار الإنجاز</button>
-      <button type="button" data-v="settings"><i>⚙️</i>النسخ الاحتياطي</button>
+      <button type="button" data-v="home"><svg class="ic"><use href="#i-home"/></svg>نظرة عامة</button>
+      <button type="button" data-v="classes"><svg class="ic"><use href="#i-school"/></svg>الصفوف</button>
+      <button type="button" data-v="students"><svg class="ic"><use href="#i-users"/></svg>الطلاب</button>
+      <button type="button" data-v="att"><svg class="ic"><use href="#i-check"/></svg>الحضور</button>
+      <button type="button" data-v="points"><svg class="ic"><use href="#i-star"/></svg>النقاط</button>
+      <button type="button" data-v="path"><svg class="ic"><use href="#i-path"/></svg>مسار الإنجاز</button>
+      <div class="side-sep">أدوات الحصة</div>
+      <button type="button" data-tool="pick"><svg class="ic"><use href="#i-shuffle"/></svg>القرعة</button>
+      <button type="button" data-tool="groups"><svg class="ic"><use href="#i-groups"/></svg>المجموعات</button>
+      <button type="button" data-tool="timer"><svg class="ic"><use href="#i-timer"/></svg>المؤقت</button>
+      <div class="side-sep">البيانات</div>
+      <button type="button" data-v="settings"><svg class="ic"><use href="#i-db"/></svg>النسخ الاحتياطي</button>
     </nav>
     <div class="side-foot">بياناتكِ محفوظة على هذا الجهاز فقط.<br><a href="./">← العودة إلى منصة أثر</a></div>
   </aside>
@@ -128,7 +178,7 @@ dialog::backdrop{background:rgba(10,30,40,.5)}
       <div><h1 id="vt">نظرة عامة</h1><p id="today"></p></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
         <select id="curClass" aria-label="الصف الحالي"></select>
-        <button class="btn gold" type="button" id="openCM">▶ وضع الحصة</button>
+        <button class="btn" type="button" data-tool="pick"><svg class="ic"><use href="#i-shuffle"/></svg>القرعة</button><button class="btn" type="button" data-tool="groups"><svg class="ic"><use href="#i-groups"/></svg>المجموعات</button><button class="btn" type="button" data-tool="timer"><svg class="ic"><use href="#i-timer"/></svg>المؤقت</button><button class="btn gold" type="button" id="openCM"><svg class="ic"><use href="#i-play"/></svg>وضع الحصة</button>
       </div>
     </div>
     <div id="view"></div>
@@ -139,12 +189,12 @@ dialog::backdrop{background:rgba(10,30,40,.5)}
   <div class="cm-top">
     <h2 id="cmTitle">وضع الحصة</h2>
     <div class="cm-tabs" id="cmTabs">
-      <button type="button" data-t="pick" aria-pressed="true">🎯 القرعة</button>
-      <button type="button" data-t="groups" aria-pressed="false">👥 المجموعات</button>
-      <button type="button" data-t="timer" aria-pressed="false">⏱️ مؤقت المهام</button>
-      <button type="button" data-t="pts" aria-pressed="false">⭐ نقاط سريعة</button>
+      <button type="button" data-t="pick" aria-pressed="true"><svg class="ic"><use href="#i-shuffle"/></svg> القرعة</button>
+      <button type="button" data-t="groups" aria-pressed="false"><svg class="ic"><use href="#i-groups"/></svg> المجموعات</button>
+      <button type="button" data-t="timer" aria-pressed="false"><svg class="ic"><use href="#i-timer"/></svg> المؤقت</button>
+      <button type="button" data-t="pts" aria-pressed="false"><svg class="ic"><use href="#i-star"/></svg> نقاط سريعة</button>
     </div>
-    <button class="btn" type="button" id="cmClose" style="background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.3)">✕ إغلاق</button>
+    <button class="btn" type="button" id="cmClose" style="background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.3)"><svg class="ic"><use href="#i-x"/></svg>إغلاق</button>
   </div>
   <div class="cm-body" id="cmBody"></div>
 </div>
@@ -155,8 +205,10 @@ dialog::backdrop{background:rgba(10,30,40,.5)}
 <script>
 {
 const KEY="basma-athar-v1";
-const LEVELS=[{n:"بذرة",e:"🌰",min:0},{n:"برعم",e:"🌱",min:20},{n:"غصن",e:"🌿",min:50},{n:"شجرة",e:"🌳",min:100},{n:"أثر",e:"✨",min:200}];
-const REASONS=[{t:"مشاركة",v:1,e:"🙋"},{t:"تعاون",v:1,e:"🤝"},{t:"إبداع",v:2,e:"💡"},{t:"إتقان المهمة",v:2,e:"🏅"},{t:"انضباط",v:1,e:"🎯"},{t:"سلوك يحتاج تحسين",v:-1,e:"⚠️"}];
+const LEVELS=[{n:"مستكشف رقمي",i:"compass",c:"#5b7c99",min:0},{n:"مبرمج ناشئ",i:"code",c:"#1d8a84",min:20},{n:"مطوّر ماهر",i:"cpu",c:"#4b5bb7",min:50},{n:"مبتكر",i:"rocket",c:"#c0602b",min:100},{n:"صانع الأثر",i:"crown",c:"#b8862b",min:200}];
+const ic=(n,c)=>`<svg class="ic ${c||""}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+const lvTag=l=>`<span class="lv" style="background:${l.c}1f;color:${l.c}">${ic(l.i)}${l.n}</span>`;
+const REASONS=[{t:"مشاركة",v:1,i:"msg"},{t:"تعاون",v:1,i:"users"},{t:"إبداع",v:2,i:"bulb"},{t:"إتقان المهمة",v:2,i:"award"},{t:"انضباط",v:1,i:"target"},{t:"سلوك يحتاج تحسين",v:-1,i:"alert"}];
 let D;
 function load(){try{D=JSON.parse(localStorage.getItem(KEY))}catch(e){D=null}D=D||{};D.classes=D.classes||[];D.students=D.students||[];D.att=D.att||{};D.points=D.points||[];D.cur=D.cur||(D.classes[0]&&D.classes[0].id)||"";}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){toast("تعذّر الحفظ على هذا الجهاز")}}
@@ -169,7 +221,7 @@ const cls=id=>D.classes.find(c=>c.id===id);
 const studs=cid=>D.students.filter(s=>s.classId===cid).sort((a,b)=>a.name.localeCompare(b.name,"ar"));
 const ptsOf=(sid,since)=>D.points.filter(p=>p.sid===sid&&(!since||p.t>=since)).reduce((a,p)=>a+p.v,0);
 const levelOf=n=>{let l=LEVELS[0];LEVELS.forEach(x=>{if(n>=x.min)l=x});return l};
-const nextLevel=n=>LEVELS.find(x=>x.min>n);
+const nextLevel=n=>LEVELS.find(x=>x.min>Math.max(0,n));
 function absences(sid){let n=0;for(const k in D.att){if(D.att[k][sid]==="a")n++}return n}
 function since(range){const d=new Date();if(range==="day"){d.setHours(0,0,0,0)}else if(range==="week"){d.setDate(d.getDate()-7)}else if(range==="month"){d.setMonth(d.getMonth()-1)}else return 0;return d.getTime()}
 
@@ -196,7 +248,7 @@ const needClass=()=>D.classes.length?"":'<div class="card empty"><b>ابدئي �
 function render(){
   fillClassSel();const W=$("#view");const c=cls(D.cur);
   if(V==="home"){
-    if(!D.classes.length){W.innerHTML='<div class="card" style="margin-bottom:14px"><h2>أهلًا بكِ في بصمة أثر 👋</h2><p class="muted" style="margin:0">لوحة صغيرة تساعدكِ في إدارة صفوفكِ داخل الحصة: الحضور، ونقاط التحفيز، ومسار الإنجاز، ووضع الحصة بالقرعة والمجموعات والمؤقت.</p></div>'+needClass();return}
+    if(!D.classes.length){W.innerHTML='<div class="card" style="margin-bottom:14px"><h2>أهلًا بكِ في بصمة أثر</h2><p class="muted" style="margin:0">لوحة صغيرة تساعدكِ في إدارة صفوفكِ داخل الحصة: الحضور، ونقاط التحفيز، ومسار الإنجاز، ووضع الحصة بالقرعة والمجموعات والمؤقت.</p></div>'+needClass();return}
     const S=D.students,today=todayISO();let pres=0,abs=0;D.classes.forEach(k=>{const a=D.att[today+"|"+k.id]||{};for(const sid in a){if(a[sid]==="a")abs++;else pres++}});
     const range=W.dataset.range||"week";
     const ranked=S.map(s=>({s,p:ptsOf(s.id,since(range))})).filter(x=>x.p>0).sort((a,b)=>b.p-a.p).slice(0,5);
@@ -210,16 +262,16 @@ function render(){
       <div class="card kpi"><div class="v">${pres}<small class="muted" style="font-size:16px"> / ${abs} غياب</small></div><div class="l">حضور اليوم</div></div>
       <div class="card kpi"><div class="v">${D.points.filter(p=>p.t>=since("week")&&p.v>0).reduce((a,p)=>a+p.v,0)}</div><div class="l">نقطة تحفيز هذا الأسبوع</div></div></div>
      <div class="grid two" style="margin-bottom:14px">
-      <div class="card"><h2>🏆 أعلى 5 طلاب <span class="toolbar" style="margin:0;gap:4px">${[["day","اليوم"],["week","الأسبوع"],["month","الشهر"],["all","الكل"]].map(([k,t])=>`<button class="btn s ${range===k?"pri":""}" type="button" data-range="${k}">${t}</button>`).join("")}</span></h2>
-        ${ranked.length?ranked.map((x,i)=>`<div class="row"><span class="av">${["🥇","🥈","🥉","4","5"][i]}</span><span class="grow"><b>${esc(x.s.name)}</b><br><span class="sm muted">${esc((cls(x.s.classId)||{}).name)}</span></span><span class="pill gold">${x.p} نقطة</span></div>`).join(""):'<div class="empty">لا توجد نقاط في هذه الفترة</div>'}</div>
-      <div class="card"><h2>🔔 يحتاجون متابعة</h2>${follow.length?follow.map(x=>`<div class="row"><span class="av">${esc(x.s.name[0])}</span><span class="grow"><b>${esc(x.s.name)}</b><br><span class="sm muted">${esc((cls(x.s.classId)||{}).name)}</span></span>${x.a>=3?`<span class="pill b">${x.a} غياب</span>`:""}${x.n>=3?`<span class="pill w">${x.n} ملاحظات سلوك</span>`:""}</div>`).join(""):'<div class="empty"><b>الجميع بخير ✓</b>يظهر هنا من غاب 3 مرات أو أكثر، أو تكررت عليه ملاحظات السلوك.</div>'}</div></div>
+      <div class="card"><h2><span style="display:flex;gap:8px;align-items:center">${ic("trophy")}أعلى 5 طلاب</span> <span class="toolbar" style="margin:0;gap:4px">${[["day","اليوم"],["week","الأسبوع"],["month","الشهر"],["all","الكل"]].map(([k,t])=>`<button class="btn s ${range===k?"pri":""}" type="button" data-range="${k}">${t}</button>`).join("")}</span></h2>
+        ${ranked.length?ranked.map((x,i)=>`<div class="row"><span class="rank r${i+1}">${i+1}</span><span class="grow"><b>${esc(x.s.name)}</b><br><span class="sm muted">${esc((cls(x.s.classId)||{}).name)}</span></span><span class="pill gold">${x.p} نقطة</span></div>`).join(""):'<div class="empty">لا توجد نقاط في هذه الفترة</div>'}</div>
+      <div class="card"><h2><span style="display:flex;gap:8px;align-items:center">${ic("bell")}يحتاجون متابعة</span></h2>${follow.length?follow.map(x=>`<div class="row"><span class="av">${esc(x.s.name[0])}</span><span class="grow"><b>${esc(x.s.name)}</b><br><span class="sm muted">${esc((cls(x.s.classId)||{}).name)}</span></span>${x.a>=3?`<span class="pill b">${x.a} غياب</span>`:""}${x.n>=3?`<span class="pill w">${x.n} ملاحظات سلوك</span>`:""}</div>`).join(""):'<div class="empty"><b>الجميع بخير</b>يظهر هنا من غاب 3 مرات أو أكثر، أو تكررت عليه ملاحظات السلوك.</div>'}</div></div>
      <div class="grid two">
-      <div class="card"><h2>📈 نقاط التحفيز آخر 7 أيام</h2><div class="bars">${days.map(d=>`<div><b style="color:var(--ink)">${d.v}</b><span style="height:${Math.round(d.v/mx*100)}%"></span>${d.l}</div>`).join("")}</div></div>
-      <div class="card"><h2>🕒 آخر النشاط</h2>${recent.length?recent.map(p=>{const s=D.students.find(x=>x.id===p.sid);return s?`<div class="row"><span class="grow">${esc(s.name)} · <span class="muted sm">${esc(p.r)}</span></span><span class="pill ${p.v>0?"g":"b"}">${p.v>0?"+":""}${p.v}</span></div>`:""}).join(""):'<div class="empty">سيظهر هنا سجل النقاط التي تضيفينها</div>'}</div></div>`;
+      <div class="card"><h2><span style="display:flex;gap:8px;align-items:center">${ic("chart")}نقاط التحفيز آخر 7 أيام</span></h2><div class="bars">${days.map(d=>`<div><b style="color:var(--ink)">${d.v}</b><span style="height:${Math.round(d.v/mx*100)}%"></span>${d.l}</div>`).join("")}</div></div>
+      <div class="card"><h2><span style="display:flex;gap:8px;align-items:center">${ic("clock")}آخر النشاط</span></h2>${recent.length?recent.map(p=>{const s=D.students.find(x=>x.id===p.sid);return s?`<div class="row"><span class="grow">${esc(s.name)} · <span class="muted sm">${esc(p.r)}</span></span><span class="pill ${p.v>0?"g":"b"}">${p.v>0?"+":""}${p.v}</span></div>`:""}).join(""):'<div class="empty">سيظهر هنا سجل النقاط التي تضيفينها</div>'}</div></div>`;
     W.querySelectorAll("[data-range]").forEach(b=>b.onclick=()=>{W.dataset.range=b.dataset.range;render()});
   }
   else if(V==="classes"){
-    W.innerHTML=`<div class="toolbar"><button class="btn pri" type="button" data-act="addClass">+ إضافة صف</button></div>`+(D.classes.length?`<div class="grid three">${D.classes.map(k=>{const n=studs(k.id).length;const p=studs(k.id).reduce((a,s)=>a+ptsOf(s.id),0);return `<div class="card cls"><h3>🏫 ${esc(k.name)}</h3><span class="muted sm">${esc(k.grade||"")}</span><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill">${n} طالب</span><span class="pill gold">${p} نقطة</span></div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><button class="btn s" type="button" data-open="${k.id}">فتح الطلاب</button><button class="btn s" type="button" data-ren="${k.id}">تعديل</button><button class="btn s bad" type="button" data-del="${k.id}">حذف</button></div></div>`}).join("")}</div>`:needClass());
+    W.innerHTML=`<div class="toolbar"><button class="btn pri" type="button" data-act="addClass">+ إضافة صف</button></div>`+(D.classes.length?`<div class="grid three">${D.classes.map(k=>{const n=studs(k.id).length;const p=studs(k.id).reduce((a,s)=>a+ptsOf(s.id),0);return `<div class="card cls"><h3 style="display:flex;gap:8px;align-items:center">${ic("school","lg")}${esc(k.name)}</h3><span class="muted sm">${esc(k.grade||"")}</span><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill">${n} طالب</span><span class="pill gold">${p} نقطة</span></div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><button class="btn s" type="button" data-open="${k.id}">فتح الطلاب</button><button class="btn s" type="button" data-ren="${k.id}">تعديل</button><button class="btn s bad" type="button" data-del="${k.id}">حذف</button></div></div>`}).join("")}</div>`:needClass());
     W.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{D.cur=b.dataset.open;save();go("students")});
     W.querySelectorAll("[data-ren]").forEach(b=>b.onclick=()=>{const k=cls(b.dataset.ren);ask("تعديل الصف",[{name:"name",label:"اسم الصف",value:k.name},{name:"grade",label:"وصف قصير (اختياري)",value:k.grade}],v=>{if(!v.name)return;k.name=v.name;k.grade=v.grade;save();render()})});
     W.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{const k=cls(b.dataset.del);if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent="تأكيد الحذف؟";setTimeout(()=>{b.dataset.armed="";b.textContent="حذف"},3000);return}const ids=new Set(studs(k.id).map(s=>s.id));D.students=D.students.filter(s=>s.classId!==k.id);D.points=D.points.filter(p=>!ids.has(p.sid));D.classes=D.classes.filter(c=>c.id!==k.id);if(D.cur===k.id)D.cur=(D.classes[0]||{}).id||"";save();render();toast("حُذف الصف")});
@@ -227,7 +279,7 @@ function render(){
   else if(V==="students"){
     if(!c){W.innerHTML=needClass();return}
     const L=studs(c.id);
-    W.innerHTML=`<div class="toolbar"><button class="btn pri" type="button" data-act="addStudents">+ إضافة طلاب</button><span class="muted sm">${esc(c.name)} · ${L.length} طالب</span></div>`+(L.length?`<div class="card">${L.map(s=>{const p=ptsOf(s.id),lv=levelOf(p);return `<div class="row"><span class="av">${esc(s.name[0])}</span><span class="grow"><b>${esc(s.name)}</b></span><span class="pill gold">${p} نقطة</span><span class="pill lvl">${lv.e} ${lv.n}</span>${absences(s.id)?`<span class="pill b">${absences(s.id)} غياب</span>`:""}<button class="btn s" type="button" data-ren="${s.id}">تعديل</button><button class="btn s bad" type="button" data-del="${s.id}">حذف</button></div>`}).join("")}</div>`:'<div class="card empty"><b>لا يوجد طلاب في هذا الصف بعد</b>أضيفي الأسماء دفعة واحدة، كل اسم في سطر.</div>');
+    W.innerHTML=`<div class="toolbar"><button class="btn pri" type="button" data-act="addStudents">+ إضافة طلاب</button><span class="muted sm">${esc(c.name)} · ${L.length} طالب</span></div>`+(L.length?`<div class="card">${L.map(s=>{const p=ptsOf(s.id),lv=levelOf(p);return `<div class="row"><span class="av">${esc(s.name[0])}</span><span class="grow"><b>${esc(s.name)}</b></span><span class="pill gold">${p} نقطة</span>${lvTag(lv)}${absences(s.id)?`<span class="pill b">${absences(s.id)} غياب</span>`:""}<button class="btn s" type="button" data-ren="${s.id}">تعديل</button><button class="btn s bad" type="button" data-del="${s.id}">حذف</button></div>`}).join("")}</div>`:'<div class="card empty"><b>لا يوجد طلاب في هذا الصف بعد</b>أضيفي الأسماء دفعة واحدة، كل اسم في سطر.</div>');
     W.querySelectorAll("[data-ren]").forEach(b=>b.onclick=()=>{const s=D.students.find(x=>x.id===b.dataset.ren);ask("تعديل الاسم",[{name:"name",label:"الاسم",value:s.name}],v=>{if(v.name){s.name=v.name;save();render()}})});
     W.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent="تأكيد؟";setTimeout(()=>{b.dataset.armed="";b.textContent="حذف"},3000);return}const id=b.dataset.del;D.students=D.students.filter(s=>s.id!==id);D.points=D.points.filter(p=>p.sid!==id);save();render()});
   }
@@ -244,17 +296,17 @@ function render(){
   else if(V==="points"){
     if(!c){W.innerHTML=needClass();return}
     const L=studs(c.id);
-    W.innerHTML=`<div class="toolbar">${REASONS.map(r=>`<span class="pill ${r.v>0?"g":"b"}">${r.e} ${esc(r.t)} ${r.v>0?"+":""}${r.v}</span>`).join("")}</div>`+(L.length?`<div class="grid ptiles">${L.map(s=>{const p=ptsOf(s.id),lv=levelOf(p);return `<div class="card pt"><span class="av" style="width:48px;height:48px;font-size:20px">${esc(s.name[0])}</span><b>${esc(s.name)}</b><span class="sc">${p}</span><span class="pill lvl">${lv.e} ${lv.n}</span><div class="acts">${REASONS.map((r,i)=>`<button class="btn s" type="button" title="${esc(r.t)} (${r.v>0?"+":""}${r.v})" aria-label="${esc(r.t)} ${r.v>0?"+":""}${r.v}" data-s="${s.id}" data-r="${i}">${r.e}</button>`).join("")}</div></div>`}).join("")}</div>`:'<div class="card empty"><b>أضيفي الطلاب أولًا</b></div>');
+    W.innerHTML=`<div class="toolbar">${REASONS.map(r=>`<span class="pill rpill ${r.v>0?"g":"b"}">${ic(r.i)}${esc(r.t)} ${r.v>0?"+":""}${r.v}</span>`).join("")}</div>`+(L.length?`<div class="grid ptiles">${L.map(s=>{const p=ptsOf(s.id),lv=levelOf(p);return `<div class="card pt"><span class="av" style="width:48px;height:48px;font-size:20px">${esc(s.name[0])}</span><b>${esc(s.name)}</b><span class="sc">${p}</span>${lvTag(lv)}<div class="acts">${REASONS.map((r,i)=>`<button type="button" title="${esc(r.t)} (${r.v>0?"+":""}${r.v})" aria-label="${esc(r.t)} ${r.v>0?"+":""}${r.v}" data-s="${s.id}" data-r="${i}" class="btn s rbtn">${ic(r.i)}</button>`).join("")}</div></div>`}).join("")}</div>`:'<div class="card empty"><b>أضيفي الطلاب أولًا</b></div>');
     W.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{const r=REASONS[+b.dataset.r];addPoint(b.dataset.s,r)});
   }
   else if(V==="path"){
     const L=c?studs(c.id):[];
-    W.innerHTML=`<div class="card" style="margin-bottom:14px"><h2>🌱 مراحل مسار الإنجاز</h2><div class="path">${LEVELS.map(l=>`<div class="step"><div class="e">${l.e}</div><b>${l.n}</b><small>من ${l.min} نقطة</small></div>`).join("")}</div></div>`+(!c?needClass():L.length?`<div class="card">${L.map(s=>{const p=ptsOf(s.id),lv=levelOf(p),nx=nextLevel(p);const pc=nx?Math.round((p-lv.min)/(nx.min-lv.min)*100):100;return `<div class="row"><span class="av">${lv.e}</span><span class="grow"><b>${esc(s.name)}</b> <span class="pill lvl">${lv.n}</span><div class="prog" style="margin-top:6px"><span style="width:${Math.max(0,Math.min(100,pc))}%"></span></div><span class="sm muted">${nx?`باقي ${nx.min-p} نقطة للوصول إلى ${nx.e} ${nx.n}`:"وصل إلى أعلى مرحلة ✨"}</span></span><span class="pill gold">${p}</span></div>`}).join("")}</div>`:'<div class="card empty"><b>أضيفي الطلاب أولًا</b></div>');
+    W.innerHTML=`<div class="card" style="margin-bottom:14px"><h2><span style="display:flex;gap:8px;align-items:center">${ic("path")}مراحل مسار الإنجاز: من مستكشف رقمي إلى صانع الأثر</span></h2><div class="path">${LEVELS.map(l=>`<div class="step"><div class="e" style="background:linear-gradient(135deg,${l.c},${l.c}cc)">${ic(l.i)}</div><b>${l.n}</b><small>من ${l.min} نقطة</small></div>`).join("")}</div></div>`+(!c?needClass():L.length?`<div class="card">${L.map(s=>{const p=ptsOf(s.id),lv=levelOf(p),nx=nextLevel(p);const pc=nx?Math.round((p-lv.min)/(nx.min-lv.min)*100):100;return `<div class="row"><span class="av" style="background:${lv.c}1f;color:${lv.c}">${ic(lv.i)}</span><span class="grow"><b>${esc(s.name)}</b> ${lvTag(lv)}<div class="prog" style="margin-top:6px"><span style="width:${Math.max(0,Math.min(100,pc))}%"></span></div><span class="sm muted">${nx?`باقي ${nx.min-p} نقطة للوصول إلى مرحلة «${nx.n}»`:"وصل إلى أعلى مرحلة: صانع الأثر"}</span></span><span class="pill gold">${p}</span></div>`}).join("")}</div>`:'<div class="card empty"><b>أضيفي الطلاب أولًا</b></div>');
   }
   else if(V==="settings"){
-    W.innerHTML=`<div class="grid two"><div class="card"><h2>💾 حفظ نسخة احتياطية</h2><p class="muted sm">بياناتكِ محفوظة في هذا المتصفح فقط. نزّلي نسخة احتياطية بين حين وآخر، أو لنقل بياناتكِ إلى جهاز آخر.</p><button class="btn pri" type="button" id="exp">⬇ تنزيل النسخة</button></div>
-      <div class="card"><h2>📂 استرجاع نسخة</h2><p class="muted sm">اختاري ملف النسخة الاحتياطية (.json). سيحلّ محل البيانات الحالية.</p><input type="file" id="imp" accept=".json,application/json"></div>
-      <div class="card"><h2>🗑️ مسح كل البيانات</h2><p class="muted sm">يحذف الصفوف والطلاب والحضور والنقاط من هذا الجهاز.</p><button class="btn bad" type="button" id="wipe">مسح البيانات</button></div></div>`;
+    W.innerHTML=`<div class="grid two"><div class="card"><h2><span style="display:flex;gap:8px;align-items:center">${ic("down")}حفظ نسخة احتياطية</span></h2><p class="muted sm">بياناتكِ محفوظة في هذا المتصفح فقط. نزّلي نسخة احتياطية بين حين وآخر، أو لنقل بياناتكِ إلى جهاز آخر.</p><button class="btn pri" type="button" id="exp">${ic("down")}تنزيل النسخة</button></div>
+      <div class="card"><h2><span style="display:flex;gap:8px;align-items:center">${ic("up")}استرجاع نسخة</span></h2><p class="muted sm">اختاري ملف النسخة الاحتياطية (.json). سيحلّ محل البيانات الحالية.</p><input type="file" id="imp" accept=".json,application/json"></div>
+      <div class="card"><h2><span style="display:flex;gap:8px;align-items:center">${ic("trash")}مسح كل البيانات</span></h2><p class="muted sm">يحذف الصفوف والطلاب والحضور والنقاط من هذا الجهاز.</p><button class="btn bad" type="button" id="wipe">مسح البيانات</button></div></div>`;
     $("#exp").onclick=()=>{const b=new Blob([JSON.stringify(D,null,1)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="basma-athar-"+todayISO()+".json";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
     $("#imp").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x||!Array.isArray(x.classes)||!Array.isArray(x.students))throw 0;localStorage.setItem(KEY,JSON.stringify(x));load();render();toast("تم استرجاع النسخة")}catch(err){toast("الملف غير صالح")}};r.readAsText(f)};
     $("#wipe").onclick=e=>{const b=e.target;if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent="اضغطي مرة أخرى للتأكيد";setTimeout(()=>{b.dataset.armed="";b.textContent="مسح البيانات"},3500);return}try{localStorage.removeItem(KEY)}catch(err){}load();render();toast("مُسحت البيانات")};
@@ -264,21 +316,21 @@ function render(){
 }
 function addClass(){ask("إضافة صف",[{name:"name",label:"اسم الصف",placeholder:"مثال: الصف الرابع / 2"},{name:"grade",label:"وصف قصير (اختياري)",placeholder:"مثال: الحصة الثالثة · مختبر 1"}],v=>{if(!v.name){toast("اكتبي اسم الصف");return}const k={id:uid(),name:v.name,grade:v.grade};D.classes.push(k);D.cur=k.id;save();render();toast("أُضيف الصف")})}
 function addStudents(){const c=cls(D.cur);if(!c)return;ask("إضافة طلاب إلى "+c.name,[{name:"names",label:"الأسماء",type:"textarea",placeholder:"اسم في كل سطر",hint:"يمكنكِ نسخ الأسماء من Excel ولصقها هنا."}],v=>{const ns=v.names.split(/\n+/).map(x=>x.trim()).filter(Boolean);if(!ns.length)return;ns.forEach(n=>D.students.push({id:uid(),classId:c.id,name:n}));save();render();toast("أُضيف "+ns.length+" طالب")},"إضافة")}
-function addPoint(sid,r){D.points.push({id:uid(),sid,v:r.v,r:r.t,t:Date.now()});save();const s=D.students.find(x=>x.id===sid);const p=ptsOf(sid);const before=p-r.v;if(levelOf(p).min>levelOf(before).min)toast("🎉 "+s.name+" انتقل إلى مرحلة "+levelOf(p).n);else toast((r.v>0?"+":"")+r.v+" · "+s.name);if($("#cm").classList.contains("on"))cmRender();else render()}
+function addPoint(sid,r){D.points.push({id:uid(),sid,v:r.v,r:r.t,t:Date.now()});save();const s=D.students.find(x=>x.id===sid);const p=ptsOf(sid);const before=p-r.v;if(levelOf(p).min>levelOf(before).min)toast("تهانينا! "+s.name+" انتقل إلى مرحلة «"+levelOf(p).n+"»");else toast((r.v>0?"+":"")+r.v+" · "+s.name);if($("#cm").classList.contains("on"))cmRender();else render()}
 
 /* وضع الحصة */
 let CT="pick",timer={left:0,total:0,run:false,h:null},lastGroups=null;
-function openCM(){const c=cls(D.cur);if(!c||!studs(c.id).length){toast("اختاري صفًا فيه طلاب أولًا");return}$("#cmTitle").textContent="وضع الحصة · "+c.name;$("#cm").classList.add("on");document.body.style.overflow="hidden";cmRender()}
+function openCM(tab){if(tab){CT=tab;document.querySelectorAll("#cmTabs button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.t===tab))}const c=cls(D.cur);if(!c||(!studs(c.id).length&&CT!=="timer")){toast("اختاري صفًا فيه طلاب أولًا");return}$("#cmTitle").textContent=c?"وضع الحصة · "+c.name:"وضع الحصة";$("#cm").classList.add("on");document.body.style.overflow="hidden";cmRender()}
 function closeCM(){$("#cm").classList.remove("on");document.body.style.overflow="";render()}
-$("#openCM").onclick=openCM;$("#cmClose").onclick=closeCM;
+$("#openCM").onclick=()=>openCM();document.querySelectorAll("[data-tool]").forEach(b=>b.onclick=()=>openCM(b.dataset.tool));$("#cmClose").onclick=closeCM;
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#cm").classList.contains("on"))closeCM()});
 document.querySelectorAll("#cmTabs button").forEach(b=>b.onclick=()=>{CT=b.dataset.t;document.querySelectorAll("#cmTabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));cmRender()});
 const fmt=s=>String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
 function cmRender(){
-  const c=cls(D.cur),L=studs(c.id),B=$("#cmBody");
-  const present=L.filter(s=>((D.att[todayISO()+"|"+c.id]||{})[s.id])!=="a");
+  const c=cls(D.cur),L=c?studs(c.id):[],B=$("#cmBody");
+  const present=c?L.filter(s=>((D.att[todayISO()+"|"+c.id]||{})[s.id])!=="a"):[];
   if(CT==="pick"){
-    B.innerHTML=`<div><div class="big" id="pickName">🎯</div><p style="text-align:center;opacity:.85;margin:6px 0 0">${present.length} طالب حاضر في القرعة</p><div class="cm-btns"><button class="btn gold" type="button" id="spin">اختيار عشوائي</button></div></div>`;
+    B.innerHTML=`<div><div class="big" id="pickName">${ic("shuffle","xl")}</div><p style="text-align:center;opacity:.85;margin:6px 0 0">${present.length} طالب حاضر في القرعة</p><div class="cm-btns"><button class="btn gold" type="button" id="spin">اختيار عشوائي</button></div></div>`;
     $("#spin").onclick=()=>{if(!present.length)return;const el=$("#pickName");let i=0;const n=16+Math.floor(Math.random()*8);const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;if(reduce){el.textContent=present[Math.floor(Math.random()*present.length)].name;return}const tick=()=>{el.textContent=present[Math.floor(Math.random()*present.length)].name;if(++i<n)setTimeout(tick,60+i*12)};tick()};
   }else if(CT==="groups"){
     B.innerHTML=`<div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:16px"><div class="cm-btns" style="margin:0"><label style="display:flex;gap:8px;align-items:center;font-weight:700">عدد المجموعات <input type="number" id="gN" min="2" max="12" value="${lastGroups?lastGroups.length:4}" style="width:90px;color:var(--ink)"></label><button class="btn gold" type="button" id="mkG">تكوين المجموعات</button></div><div class="groups" id="gOut"></div></div>`;
@@ -287,7 +339,7 @@ function cmRender(){
   }else if(CT==="timer"){
     B.innerHTML=`<div><div class="big" id="tm">${fmt(timer.left)}</div><div class="cm-btns">${[1,3,5,10,15].map(m=>`<button class="btn" type="button" data-m="${m}">${m} د</button>`).join("")}</div><div class="cm-btns"><button class="btn gold" type="button" id="tGo">${timer.run?"إيقاف مؤقت":"ابدأ"}</button><button class="btn" type="button" id="tReset">إعادة</button></div></div>`;
     B.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{clearInterval(timer.h);timer={left:+b.dataset.m*60,total:+b.dataset.m*60,run:false,h:null};cmRender()});
-    $("#tGo").onclick=()=>{if(timer.run){clearInterval(timer.h);timer.run=false;cmRender();return}if(!timer.left)return;timer.run=true;timer.h=setInterval(()=>{timer.left--;const t=$("#tm");if(t)t.textContent=fmt(timer.left);if(timer.left<=0){clearInterval(timer.h);timer.run=false;if(t)t.textContent="انتهى الوقت ⏰";beep()}},1000);cmRender()};
+    $("#tGo").onclick=()=>{if(timer.run){clearInterval(timer.h);timer.run=false;cmRender();return}if(!timer.left)return;timer.run=true;timer.h=setInterval(()=>{timer.left--;const t=$("#tm");if(t)t.textContent=fmt(timer.left);if(timer.left<=0){clearInterval(timer.h);timer.run=false;if(t)t.textContent="انتهى الوقت";beep()}},1000);cmRender()};
     $("#tReset").onclick=()=>{clearInterval(timer.h);timer.left=timer.total;timer.run=false;cmRender()};
   }else if(CT==="pts"){
     B.innerHTML=`<div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:12px"><p style="margin:0;opacity:.85">اضغطي على اسم الطالب لإضافة نقطة مشاركة (+1)</p><div class="cm-pts">${L.map(s=>`<button type="button" data-s="${s.id}"><b>${ptsOf(s.id)}</b>${esc(s.name)}</button>`).join("")}</div></div>`;
